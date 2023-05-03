@@ -1,11 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context=".SleepChart"-->
+<!--    android:background="@color/teal_200">-->
+
+
+
+<!--</FrameLayout>-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SleepChart"
-    android:background="@color/teal_200">
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:background="#F4F4F4">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:text="1일"
+            />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="2dp"
+        android:text="1주" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/InAMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="2dp"
+        android:text="1개월" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/InSixMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="2dp"
+        android:text="6개월" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/corner_radius"
+        android:layout_centerHorizontal="true">
+
+    <TextView
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="그래프 들어올 자리" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="310dp"
+        android:background="@drawable/corner_radius"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/timeText1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="시간"
+            android:textSize="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"/>
+        <TextView
+            android:id="@+id/timeText2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="전일 대비 수면 시간이 23% 증가하였습니다."
+            android:textSize="10dp"
+            android:layout_marginStart="20dp"/>
+        <TextView
+            android:id="@+id/frequencyText1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="빈도"
+            android:textSize="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            />
+        <TextView
+            android:id="@+id/frequencyText2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="전일 대비 수면 빈도가 감소하였습니다."
+            android:textSize="10dp"
+            android:layout_marginStart="20dp"/>
+
+
+    </LinearLayout>
 
 
 
-</FrameLayout>
+
+
+</RelativeLayout>
