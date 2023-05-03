@@ -33,7 +33,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="66dp"
-        android:layout_marginTop="334dp"
+        android:layout_marginTop="280dp"
         android:background="@drawable/corner_radius"
 
         android:orientation="vertical">
@@ -54,13 +54,13 @@
 
         <Button
             android:id="@+id/button2"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="문자 내역"
-            android:textColor="@color/black"
             android:backgroundTint="@color/white"
-            style="?android:attr/borderlessButtonStyle"/>
+            android:text="문자 내역"
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/button3"
