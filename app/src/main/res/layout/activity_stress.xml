@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".StressActivity">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
@@ -14,13 +14,11 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/bottom_menu"
-        app:itemIconTint="#808080"/>
+        app:menu="@menu/bottom_menu" />
 
-    <FrameLayout
-        android:id="@+id/main_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="스트레스 상세"/>
 
 </RelativeLayout>

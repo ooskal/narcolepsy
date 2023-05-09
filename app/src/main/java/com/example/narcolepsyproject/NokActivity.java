@@ -8,10 +8,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class NokActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     SharedPreferences sharedPreferences;
@@ -20,11 +25,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        
-        setTitle("기면증 방지앱 (가제)");
+        setContentView(R.layout.activity_nok);
 
         bottomNavigationView = findViewById(R.id.bottomNav);
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = sharedPreferences.edit();
 
@@ -39,17 +43,17 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.item_sleepChart:
                         editor.putInt("selectedTab", 0);
                         editor.apply();
-                        startActivity(new Intent(MainActivity.this, SleepChartActivity.class));
+                        startActivity(new Intent(NokActivity.this, SleepChartActivity.class));
                         return true;
                     case R.id.item_home:
                         editor.putInt("selectedTab", 1);
                         editor.apply();
-                        startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                        startActivity(new Intent(NokActivity.this, HomeActivity.class));
                         return true;
                     case R.id.item_myPage:
                         editor.putInt("selectedTab", 2);
                         editor.apply();
-                        startActivity(new Intent(MainActivity.this, MyPageActivity.class));
+                        startActivity(new Intent(NokActivity.this, MyPageActivity.class));
                         return true;
                     default:
                         return false;
@@ -58,5 +62,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        setTitle("보호자 관리");
+
+        String[] nok = {"엄마", "아빠"};
+
+        ListView lv = (ListView) findViewById(R.id.phoneNumList);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, nok);
+        lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getApplicationContext(), nok[i], Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
