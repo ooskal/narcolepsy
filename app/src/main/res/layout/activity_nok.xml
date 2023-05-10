@@ -23,4 +23,13 @@
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/bottom_menu" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="450dp"
+        android:layout_marginLeft="320dp"
+        android:text="연락처\n추가"
+        android:textSize="14dp"
+        android:textStyle="bold"/>
+
 </RelativeLayout>

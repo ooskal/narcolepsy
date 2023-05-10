@@ -28,56 +28,56 @@
             android:textColor="@color/black"/>
 
         <LinearLayout
-            android:layout_width="210dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/corner_radius"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="지난 주"
-                android:textSize="6pt"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="지난 주"-->
+<!--                android:textSize="6pt"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textColor="@color/black"/>-->
 
-            <TextView
-                android:id="@+id/prevWeek"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="여긴 지난 주 그래프"
-                android:textSize="6pt"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/black"/>
+<!--            <com.github.mikephil.charting.charts.HorizontalBarChart-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:background="@color/white"-->
+<!--                android:id="@+id/lastWeekBar"/>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="이번 주"
-                android:textSize="6pt"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/black"/>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="이번 주"-->
+<!--                android:textSize="6pt"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:textColor="@color/black"/>-->
 
-            <TextView
-                android:id="@+id/thisWeek"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="여긴 이번 주 그래프"
-                android:textSize="6pt"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/black"/>
+<!--            <com.github.mikephil.charting.charts.HorizontalBarChart-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:background="@color/white"-->
+<!--                android:id="@+id/thisWeekBar"/>-->
+
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@color/white"
+                android:id="@+id/weekChart"/>
 
             <TextView
                 android:id="@+id/weekReport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="지난 주에 비해 활동시간 중 수면빈도가 증가했습니다."
+                android:text="지난 주에 비해 활동시간 중 수면빈도가 감소했습니다."
                 android:textSize="4pt"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
@@ -95,7 +95,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="66dp"
-        android:layout_marginTop="260dp"
+        android:layout_marginTop="290dp"
         android:background="@drawable/corner_radius"
         android:orientation="vertical">
 
@@ -129,7 +129,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="66dp"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="430dp"
         android:background="@drawable/corner_radius"
         android:orientation="vertical">
 
@@ -150,6 +150,13 @@
             android:layout_margin="15dp"
             android:textSize="7pt"
             android:textColor="@color/black"/>
+
+<!--        <com.github.mikephil.charting.charts.HorizontalBarChart-->
+<!--            android:layout_width="250dp"-->
+<!--            android:layout_marginLeft="15dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:background="@color/white"-->
+<!--            android:id="@+id/stressBar"/>-->
 
     </LinearLayout>
 
