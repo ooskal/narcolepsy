@@ -162,8 +162,7 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
 
     @Override
     public void onDangerousHeartRate() {
-        // 위험한 심박수 도달 시 동작할 코드 작성
-        // 예: 경고 알림 표시, 긴급 조치 등
+
 
 
     }
