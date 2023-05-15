@@ -90,14 +90,13 @@
                 android:value="" />
         </activity>
         <receiver
-            android:name=".notification.YourBroadcastReceiver"
+            android:name=".notification.ButtonClickReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.example.narcolepsyproject.ACTION_BUTTON_CLICK" />
+                <action android:name="com.example.BUTTON_CLICK_ACTION" />
             </intent-filter>
         </receiver>
-
 
     </application>
     <uses-permission android:name="android.permission.VIBRATE" />
