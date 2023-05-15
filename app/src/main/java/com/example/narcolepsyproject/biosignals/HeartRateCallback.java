@@ -1,4 +1,4 @@
-package com.example.narcolepsyproject.data;
+package com.example.narcolepsyproject.biosignals;
 
 public interface HeartRateCallback {
     void onHeartRateUpdate(int heartRate);

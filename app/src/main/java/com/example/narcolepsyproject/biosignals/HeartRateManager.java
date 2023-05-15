@@ -1,4 +1,6 @@
-package com.example.narcolepsyproject.data;
+package com.example.narcolepsyproject.biosignals;
+
+import android.util.Log;
 
 import java.util.Random;
 import java.util.Timer;
@@ -11,12 +13,13 @@ public class HeartRateManager {
     private Timer timer;
     private Random random;
 
-
+    //생성자
     public HeartRateManager(HeartRateCallback callback) {
         this.callback = callback;
         this.random = new Random();
     }
 
+    //3초마다 심박 업데이트
     public void startHeartRateMonitoring() {
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -24,14 +27,16 @@ public class HeartRateManager {
             public void run() {
                 int heartRate = generateRandomHeartRate();
                 callback.onHeartRateUpdate(heartRate);
+                Log.d("HeartRateManager", String.valueOf(heartRate));
 
-                if (heartRate < MIN_HEART_RATE) {
+                if (heartRate < 55) {
                     callback.onDangerousHeartRate();
                 }
             }
         }, 0, 3000); // 3초마다 실행
     }
 
+    //작동 중지
     public void stopHeartRateMonitoring() {
         if (timer != null) {
             timer.cancel();

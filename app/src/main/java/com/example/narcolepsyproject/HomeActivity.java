@@ -1,7 +1,6 @@
 package com.example.narcolepsyproject;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -9,7 +8,7 @@ import androidx.core.app.NotificationManagerCompat;
 import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.DialogInterface;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -21,10 +20,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.narcolepsyproject.data.HeartRateCallback;
+import com.example.narcolepsyproject.biosignals.HeartRateCallback;
 
+import com.example.narcolepsyproject.biosignals.HeartRateManager;
+import com.example.narcolepsyproject.notification.NotificationHelper;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -35,16 +35,19 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements HeartRateCallback {
+
 
     BottomNavigationView bottomNavigationView;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     LinearLayout stressLayout;
     HorizontalBarChart horizontalBarChart;
-    TextView heartbeatText = findViewById(R.id.heartBeat);
+    TextView heartbeatText;
+
+
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -54,8 +57,7 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
 
         setTitle("Home");
 
-        //심박수 알림
-
+        heartbeatText = findViewById(R.id.heartBeat);
 
 
         //뷰 관련
@@ -150,22 +152,26 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
             }
         });
 
+        HeartRateManager manager = new HeartRateManager(HomeActivity.this);
+        manager.startHeartRateMonitoring();
+
     }
 
-    // 심박수 관련 메소드
+
+
     @Override
     public void onHeartRateUpdate(int heartRate) {
-        // 심박수 업데이트 시 UI 변경
-        heartbeatText.setText(Integer.toString(heartRate));
-
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                heartbeatText.setText(Integer.toString(heartRate));
+            }
+        });
     }
+
 
     @Override
     public void onDangerousHeartRate() {
-
-
-
+        NotificationHelper.showNotification(HomeActivity.this, "Notification Title", "Notification Message");
     }
-
-
 }

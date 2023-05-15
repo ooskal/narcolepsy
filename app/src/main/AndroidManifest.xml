@@ -89,6 +89,17 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <receiver
+            android:name=".notification.YourBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.narcolepsyproject.ACTION_BUTTON_CLICK" />
+            </intent-filter>
+        </receiver>
+
+
     </application>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
 </manifest>
