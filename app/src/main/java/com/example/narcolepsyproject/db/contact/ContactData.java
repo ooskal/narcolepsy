@@ -11,6 +11,7 @@ import java.io.Serializable;
 @Entity(tableName = "contact")
 public class ContactData implements Serializable
 {
+
     @PrimaryKey(autoGenerate = true)
     private int id;
 
