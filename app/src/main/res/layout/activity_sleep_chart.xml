@@ -48,23 +48,24 @@
 
     <LinearLayout
         android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_height="280dp"
+        android:layout_marginTop="110dp"
         android:background="@drawable/corner_radius"
         android:layout_centerHorizontal="true">
 
-        <TextView
-            android:id="@+id/chart"
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/sleepChart"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="그래프 들어올 자리" />
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="310dp"
+        android:layout_marginTop="410dp"
         android:background="@drawable/corner_radius"
         android:layout_centerHorizontal="true"
         android:orientation="vertical">
