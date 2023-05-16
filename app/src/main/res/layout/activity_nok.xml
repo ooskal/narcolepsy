@@ -7,11 +7,11 @@
     tools:context=".NokActivity"
     android:background="#F4F4F4">
 
-    <ListView
-        android:id="@+id/phoneNumList"
-        android:layout_width="340dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp" />
+<!--    <ListView-->
+<!--        android:id="@+id/phoneNumList"-->
+<!--        android:layout_width="340dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="30dp" />-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
@@ -23,13 +23,41 @@
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/bottom_menu" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="450dp"
-        android:layout_marginLeft="320dp"
-        android:text="연락처\n추가"
-        android:textSize="14dp"
-        android:textStyle="bold"/>
+    <EditText
+        android:id="@+id/editNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="이름 입력"
+        android:padding="12dp"
+      />
+
+    <EditText
+        android:id="@+id/editPhoneNumberText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="번호 입력"
+        android:layout_marginTop="40dp"
+        android:padding="12dp"
+      />
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="연락처 추가"
+        android:layout_marginLeft="280dp"/>
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_marginTop="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        tools:listitem="@layout/list_row_nok"/>
+
+
 
 </RelativeLayout>
