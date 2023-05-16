@@ -2,19 +2,31 @@ package com.example.narcolepsyproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.narcolepsyproject.biosignals.HeartRateCallback;
+
+import com.example.narcolepsyproject.biosignals.HeartRateManager;
+import com.example.narcolepsyproject.notification.ButtonClickReceiver;
+import com.example.narcolepsyproject.notification.NotificationHelper;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -25,15 +37,19 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements HeartRateCallback {
+
 
     BottomNavigationView bottomNavigationView;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     LinearLayout stressLayout;
     HorizontalBarChart horizontalBarChart;
+    TextView heartbeatText;
+
+
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,6 +58,11 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         setTitle("Home");
+
+        heartbeatText = findViewById(R.id.heartBeat);
+
+
+        //뷰 관련
 
         bottomNavigationView = findViewById(R.id.bottomNav);
         stressLayout = findViewById(R.id.stressBox);
@@ -133,5 +154,26 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        HeartRateManager manager = new HeartRateManager(HomeActivity.this);
+        manager.startHeartRateMonitoring();
+
+    }
+
+
+
+    @Override
+    public void onHeartRateUpdate(int heartRate) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                heartbeatText.setText(Integer.toString(heartRate));
+            }
+        });
+    }
+
+
+    @Override
+    public void onDangerousHeartRate() {
+        NotificationHelper.showNotification(HomeActivity.this, "횟수: ", "내용");
     }
 }
