@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:backgroundTint="@color/black" /> <!-- 클릭 시 회색 -->
+    <item android:backgroundTint="@color/white" /> <!-- 클릭하지 않았을 때 흰색 -->
+</selector>
