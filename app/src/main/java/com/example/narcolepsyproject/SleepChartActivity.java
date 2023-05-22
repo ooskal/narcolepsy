@@ -133,6 +133,22 @@ public class SleepChartActivity extends AppCompatActivity {
         }
     }
 
+    //수면기록저장
+    private void saveSleepRecord(int numEntries) {
+        Random random = new Random();
+        for (int i = 0; i < numEntries; i++) {
+            int x = i;
+            int y = random.nextInt(8) + 1;
+
+            SleepChartData sleepData = new SleepChartData();
+            sleepData.setDayOfWeek(x);
+            sleepData.setHoursOfSleep(y);
+
+            database.sleepDao().insert(sleepData);
+        }
+
+    }
+
     // 주간 그래프 설정
     private void setWeeklyGraph() {
 
@@ -148,17 +164,8 @@ public class SleepChartActivity extends AppCompatActivity {
         Random random = new Random();
         int numEntries = 7; // 사용할 데이터 개수
 
-        // 데이터 삽입
-        for (int i = 0; i < numEntries; i++) {
-            int x = i;
-            int y = random.nextInt(8) + 1;
-
-            SleepChartData sleepData = new SleepChartData();
-            sleepData.setDayOfWeek(x);
-            sleepData.setHoursOfSleep(y);
-
-            database.sleepDao().insert(sleepData);
-        }
+        //데이터 삽입
+        saveSleepRecord(7);
 
         List<SleepChartData> dataList = database.sleepDao().getAllSleepChartData();
 
@@ -169,15 +176,6 @@ public class SleepChartActivity extends AppCompatActivity {
 
             entries.add(new BarEntry(x, y));
         }
-
-//        entries.add(new BarEntry(0, 7));   // 일요일
-//        entries.add(new BarEntry(1, 6));   // 월요일
-//        entries.add(new BarEntry(2, 5));   // 화요일
-//        entries.add(new BarEntry(3, 8));   // 수요일
-//        entries.add(new BarEntry(4, 7));   // 목요일
-//        entries.add(new BarEntry(5, 6));   // 금요일
-//        entries.add(new BarEntry(6, 5));   // 토요일
-
 
         BarDataSet dataSet = new BarDataSet(entries, "Sleep Data");
         dataSet.setColor(Color.rgb(255, 160, 72));
@@ -216,9 +214,18 @@ public class SleepChartActivity extends AppCompatActivity {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < 30; i++) {
-            entries.add(new BarEntry(i, (float) Math.random() * 10)); // 임의의 값 넣기
+        //데이터 삽입
+        saveSleepRecord(30);
+
+        List<SleepChartData> dataList = database.sleepDao().getAllSleepChartData();
+
+        for (SleepChartData data : dataList) {
+            int x = data.getDayOfWeek();
+            int y = data.getHoursOfSleep();
+
+            entries.add(new BarEntry(x, y));
         }
+
 
         BarDataSet dataSet = new BarDataSet(entries, "Sleep Month Data");
         dataSet.setColor(Color.rgb(255, 160, 72));
