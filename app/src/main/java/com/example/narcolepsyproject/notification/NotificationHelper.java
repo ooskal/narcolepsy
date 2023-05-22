@@ -13,20 +13,44 @@ import androidx.core.app.NotificationManagerCompat;
 import com.example.narcolepsyproject.HomeActivity;
 import com.example.narcolepsyproject.R;
 
+import java.util.Set;
+
 public class NotificationHelper {
 
-    private static int buttonClickCount = 3;
+
     private static final String NOTIFICATION_CHANNEL_ID = "your_channel_id";
     public static final int NOTIFICATION_ID = 1234;
+    private static int notificationCount = 3;
+    private static boolean isButtonClicked = false;
 
-    public static void addButtonClickCount(){
-        if(buttonClickCount != 0){
-            buttonClickCount--;
-        }else{
-            buttonClickCount = 3;
+
+    //알림 실행 때마다 카운트 감소
+    public static void addNotificationCount(){
+
+        if(notificationCount!=0){
+            notificationCount--;
         }
+        else {
+            //문자메시지 보내기
+
+            //일단 리셋
+            notificationCount=3;
+        }
+
     }
 
+
+
+    //버튼 클릭 되었을 때
+    public static void resetNotificationCount(){
+        notificationCount = 3;
+    }
+
+
+
+
+
+    //알림 생성
     public static void showNotification(Context context, String title, String message) {
         Intent notificationIntent = new Intent(context, HomeActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(
@@ -36,11 +60,11 @@ public class NotificationHelper {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-
+        addNotificationCount();
 
         Intent buttonClickIntent = new Intent(context, ButtonClickReceiver.class);
         buttonClickIntent.setAction("com.example.BUTTON_CLICK_ACTION");
-        buttonClickIntent.putExtra("CLICK_COUNT", buttonClickCount); // 버튼 클릭 횟수를 인텐트에 추가
+        buttonClickIntent.putExtra("CLICK_COUNT", notificationCount); // 알림 횟수를 인텐트에 추가
         PendingIntent buttonClickPendingIntent = PendingIntent.getBroadcast(
                 context,
                 0,
@@ -48,11 +72,11 @@ public class NotificationHelper {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-        String clickCountString = String.valueOf(buttonClickCount); // 버튼 클릭 횟수를 문자열로 변환합니다.
+        String notificationString = String.valueOf(notificationCount);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setContentTitle(title)
-                .setContentText(message + clickCountString)
+                .setContentText(message + notificationString)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
