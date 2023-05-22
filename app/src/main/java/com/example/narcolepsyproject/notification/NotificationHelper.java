@@ -48,7 +48,7 @@ public class NotificationHelper {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-        String clickCountString = String.valueOf(buttonClickCount); // 버튼 클릭 횟수를 문자열로 변환합니다.
+        String clickCountString = String.valueOf(buttonClickCount); // 버튼 클릭 횟수를 문자열로 변환
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setContentTitle(title)
