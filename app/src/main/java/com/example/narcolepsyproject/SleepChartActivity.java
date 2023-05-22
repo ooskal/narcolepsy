@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
+import com.example.narcolepsyproject.db.RoomDB;
+import com.example.narcolepsyproject.db.SleepChart.SleepChartData;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
@@ -23,6 +25,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Random;
 
 public class SleepChartActivity extends AppCompatActivity {
 
@@ -30,6 +34,10 @@ public class SleepChartActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     BarChart sleepChart;
+
+    //데이터베이스
+    RoomDB database;
+    List<SleepChartData> dataList = new ArrayList<>();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -73,16 +81,50 @@ public class SleepChartActivity extends AppCompatActivity {
                 }
             }
         });
+
         BarChart sleepChart = findViewById(R.id.sleepChart);
 
+        database = RoomDB.getInstance(this);
+
         ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0, 7));   // 일요일
-        entries.add(new BarEntry(1, 6));   // 월요일
-        entries.add(new BarEntry(2, 5));   // 화요일
-        entries.add(new BarEntry(3, 8));   // 수요일
-        entries.add(new BarEntry(4, 7));   // 목요일
-        entries.add(new BarEntry(5, 6));   // 금요일
-        entries.add(new BarEntry(6, 5));   // 토요일
+
+        Random random = new Random();
+        int numEntries = 7; // 사용할 데이터 개수
+
+        // 데이터 삽입
+        for (int i = 0; i < numEntries; i++) {
+            int x = i + 1;
+            int y = random.nextInt(8) + 1;
+
+            SleepChartData sleepData = new SleepChartData();
+            sleepData.setDayOfWeek(x);
+            sleepData.setHoursOfSleep(y);
+
+            database.sleepDao().insert(sleepData);
+        }
+
+        List<SleepChartData> dataList = database.sleepDao().getAllSleepChartData();
+
+        // 그래프에 데이터 삽입
+        for (SleepChartData data : dataList) {
+            int x = data.getDayOfWeek();
+            int y = data.getHoursOfSleep();
+
+            entries.add(new BarEntry(x, y));
+        }
+
+
+
+//        entries.add(new BarEntry(0, 7));   // 일요일
+//        entries.add(new BarEntry(1, 6));   // 월요일
+//        entries.add(new BarEntry(2, 5));   // 화요일
+//        entries.add(new BarEntry(3, 8));   // 수요일
+//        entries.add(new BarEntry(4, 7));   // 목요일
+//        entries.add(new BarEntry(5, 6));   // 금요일
+//        entries.add(new BarEntry(6, 5));   // 토요일
+
+
+
 
         BarDataSet dataSet = new BarDataSet(entries, "Sleep Data");
         dataSet.setColor(Color.BLUE);
@@ -91,7 +133,7 @@ public class SleepChartActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
 
         for (int i = 0; i < 7; i++) {
-            labels.add(getDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK)));
+            labels.add(getDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK))); //day_of_week -> 특정 날짜의 요일
             calendar.add(Calendar.DAY_OF_WEEK, 1);
         }
 

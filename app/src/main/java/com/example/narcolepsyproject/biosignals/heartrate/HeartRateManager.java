@@ -1,6 +1,8 @@
-package com.example.narcolepsyproject.biosignals;
+package com.example.narcolepsyproject.biosignals.heartrate;
 
 import android.util.Log;
+
+import com.example.narcolepsyproject.biosignals.heartrate.HeartRateCallback;
 
 import java.util.Random;
 import java.util.Timer;
