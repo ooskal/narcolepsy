@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFFFFF"/> <!-- 사각형의 채우기 색상 -->
+    <size android:width="50dp" android:height="50dp"/> <!-- 사각형의 크기 -->
+</shape>
+
