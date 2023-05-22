@@ -140,6 +140,9 @@ public class SleepChartActivity extends AppCompatActivity {
 
         database = RoomDB.getInstance(this);
 
+        //기존 데이터 삭제
+        database.sleepDao().delete();
+
         ArrayList<BarEntry> entries = new ArrayList<>();
 
         Random random = new Random();
@@ -167,8 +170,6 @@ public class SleepChartActivity extends AppCompatActivity {
             entries.add(new BarEntry(x, y));
         }
 
-
-
 //        entries.add(new BarEntry(0, 7));   // 일요일
 //        entries.add(new BarEntry(1, 6));   // 월요일
 //        entries.add(new BarEntry(2, 5));   // 화요일
@@ -176,8 +177,6 @@ public class SleepChartActivity extends AppCompatActivity {
 //        entries.add(new BarEntry(4, 7));   // 목요일
 //        entries.add(new BarEntry(5, 6));   // 금요일
 //        entries.add(new BarEntry(6, 5));   // 토요일
-
-
 
 
         BarDataSet dataSet = new BarDataSet(entries, "Sleep Data");

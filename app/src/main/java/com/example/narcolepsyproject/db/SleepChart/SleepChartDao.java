@@ -21,8 +21,8 @@ public interface SleepChartDao {
     @Update
     void update(SleepChartData sleepChartData);
 
-    @Delete
-    void delete(SleepChartData sleepChartData);
+    @Query("DELETE FROM sleep_chart")
+    void delete();
 
     @Query("SELECT * FROM sleep_chart")
     List<SleepChartData> getAllSleepChartData();
