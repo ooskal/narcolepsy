@@ -2,18 +2,20 @@ package com.example.narcolepsyproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.Button;
 
-import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -21,38 +23,60 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        setMonthlyGraph();
 
-        HorizontalBarChart horizontalBarChart = findViewById(R.id.testChart);
+    }
+    private void setMonthlyGraph() {
+        BarChart sleepChart = findViewById(R.id.testChart);
 
-// "지난주" 데이터
-        ArrayList<BarEntry> lastWeekEntries = new ArrayList<>();
-        lastWeekEntries.add(new BarEntry(0, 20f));
-// 데이터 추가 코드...
+        ArrayList<BarEntry> entries = new ArrayList<>();
 
-// "이번주" 데이터
-        ArrayList<BarEntry> thisWeekEntries = new ArrayList<>();
-        thisWeekEntries.add(new BarEntry(1, 10f));
-// 데이터 추가 코드...
+        for (int i = 0; i < 30; i++) {
+            entries.add(new BarEntry(i, (float) Math.random() * 10)); // 임의의 값 넣기
+        }
 
-        BarDataSet lastWeekDataSet = new BarDataSet(lastWeekEntries, "지난주");
-        BarDataSet thisWeekDataSet = new BarDataSet(thisWeekEntries, "이번주");
+        BarDataSet dataSet = new BarDataSet(entries, "Sleep Month Data");
+        dataSet.setColor(Color.rgb(255, 160, 72));
 
-        ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-        dataSets.add(lastWeekDataSet);
-        dataSets.add(thisWeekDataSet);
+        ArrayList<String> labels = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
 
-        BarData barData = new BarData(dataSets);
-        horizontalBarChart.setData(barData);
+        BarData data = new BarData(dataSet);
+        sleepChart.setData(data);
 
-        XAxis xAxis = horizontalBarChart.getXAxis();
+        XAxis xAxis = sleepChart.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(getMonthDays()));
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setDrawAxisLine(false);
 
-// "지난주"과 "이번주" 라벨 설정
-        xAxis.setLabelCount(2);
-        String[] labels = {"지난주", "이번주"};
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+        YAxis yAxis = sleepChart.getAxisLeft();
+        yAxis.setAxisMinimum(0f);
+        yAxis.setAxisMaximum(10f);
 
-        horizontalBarChart.invalidate();
+        sleepChart.getAxisRight().setEnabled(false);
+        Description description = new Description();
+        description.setEnabled(false);
+        sleepChart.setDescription(description);
+        sleepChart.getLegend().setEnabled(false);
+        sleepChart.invalidate();
+    }
 
+    // 임의값 생성
+//    private float getRandomValue() {
+//        return (float) (Math.random() * 10);
+//    }
+
+    // 날짜 반환하는 메소드
+    private ArrayList<String> getMonthDays() {
+        ArrayList<String> days = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+
+        for (int i = 0; i < 30; i++) {
+            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+            days.add(String.valueOf(dayOfMonth));
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        return days;
     }
 }
