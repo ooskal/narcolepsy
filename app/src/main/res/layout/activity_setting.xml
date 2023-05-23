@@ -4,7 +4,231 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingActivity">
+    tools:context=".SettingActivity"
+    android:background="#F4F4F4"
+    android:orientation="vertical"
+    android:layout_centerHorizontal="true">
+
+<!--    전체 (bottom navigation 제외)-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true">
+<!--    활동시간텍스트포함-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="활동 시간"
+                android:textSize="25dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="설정한 활동 시간에만 알림 기능이 활성화됩니다."
+                android:layout_marginTop="2dp"
+                android:textSize="15dp"/>
+    <!--        활동시간-->
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/corner_radius"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+    <!--            활동시간/활동시작시간-->
+                <LinearLayout
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/corner_radius"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="활동 시작 시간"
+                        android:textSize="20dp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="3dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/startTime"
+                        android:text="00 : 00"
+                        android:textSize="40dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="50dp"/>
+                </LinearLayout>
+    <!--            활동시간/활동시작시간 끝-->
+
+    <!--            활동시간/활동종료시간-->
+                <LinearLayout
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/corner_radius"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="활동 종료 시간"
+                        android:textSize="20dp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="3dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/endTime"
+                        android:text="00 : 00"
+                        android:textSize="40dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="50dp"/>
+                </LinearLayout>
+    <!--            활동시간/활동종료시간 끝-->
+
+            </LinearLayout>
+    <!--        활동시간 끝-->
+        </LinearLayout>
+    <!--    활동시간텍스트포함 끝-->
+
+<!--        반복 텍스트포함-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="반복"
+                android:textSize="25dp"
+                android:textColor="@color/black" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="알림에 응답이 없을 경우 보호자에게 자동으로 메시지가 전송됩니다."
+                android:layout_marginTop="2dp"
+                android:textSize="12dp"/>
+
+<!--            반복-->
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/corner_radius"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3회"
+                        android:textSize="18dp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="20dp"
+                        android:id="@+id/repeat"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="30초 동안"
+                        android:textSize="18dp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="20dp"
+                        android:id="@+id/holding"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1분 간격"
+                        android:textSize="18dp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:id="@+id/term"/>
+            </LinearLayout>
+<!--            반복 끝-->
+
+        </LinearLayout>
+<!--        반복 텍스트포함 끝-->
+
+        <!--        알림음 텍스트포함-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="알림음"
+                android:textSize="25dp"
+                android:textColor="@color/black" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="알림음을 설정합니다."
+                android:layout_marginTop="2dp"
+                android:textSize="12dp"/>
+
+            <!--            알림음-->
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/corner_radius"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="진동"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/haptic"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="무음"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/silent"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="소리"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:id="@+id/ring"/>
+            </LinearLayout>
+            <!--            알림음 끝-->
+
+        </LinearLayout>
+        <!--        알림음 텍스트포함 끝-->
+
+    </LinearLayout>
+<!--    전체 끝-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
@@ -14,11 +238,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/bottom_menu" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="맞춤 설정"/>
+        app:menu="@menu/bottom_menu"
+        android:layout_gravity="bottom"/>
 
 </RelativeLayout>
