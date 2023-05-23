@@ -27,13 +27,13 @@
                 android:text="활동 시간"
                 android:textSize="25dp"
                 android:textColor="@color/black"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="5dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="설정한 활동 시간에만 알림 기능이 활성화됩니다."
                 android:layout_marginTop="2dp"
-                android:textSize="15dp"/>
+                android:textSize="12dp"/>
     <!--        활동시간-->
             <LinearLayout
                 android:layout_width="350dp"
@@ -64,7 +64,8 @@
                         android:textSize="40dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="50dp"/>
+                        android:layout_marginLeft="50dp"
+                        android:onClick="showTimePickerDialog"/>
                 </LinearLayout>
     <!--            활동시간/활동시작시간 끝-->
 
@@ -91,7 +92,8 @@
                         android:textSize="40dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="50dp"/>
+                        android:layout_marginLeft="50dp"
+                        android:onClick="showTimePickerDialog"/>
                 </LinearLayout>
     <!--            활동시간/활동종료시간 끝-->
 
@@ -137,26 +139,8 @@
                         android:textColor="@color/black"
                         android:layout_marginLeft="40dp"
                         android:layout_marginTop="20dp"
-                        android:id="@+id/repeat"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="30초 동안"
-                        android:textSize="18dp"
-                        android:textColor="@color/black"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="20dp"
-                        android:id="@+id/holding"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1분 간격"
-                        android:textSize="18dp"
-                        android:textColor="@color/black"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp"
-                        android:id="@+id/term"/>
+                        android:id="@+id/repeat"/>
             </LinearLayout>
 <!--            반복 끝-->
 
@@ -239,6 +223,6 @@
         android:layout_alignParentBottom="true"
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/bottom_menu"
-        android:layout_gravity="bottom"/>
+        android:layout_gravity="bottom" />
 
 </RelativeLayout>

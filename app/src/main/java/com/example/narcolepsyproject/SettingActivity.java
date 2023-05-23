@@ -4,19 +4,30 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class SettingActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigationView;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    private BottomNavigationView bottomNavigationView;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private TextView startTime, endTime;
+    private Calendar calendar;
+    private SimpleDateFormat timeFormat;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -27,6 +38,24 @@ public class SettingActivity extends AppCompatActivity {
         setTitle("알림 설정");
 
         bottomNavigationView = findViewById(R.id.bottomNav);
+        startTime = findViewById(R.id.startTime);
+        endTime = findViewById(R.id.endTime);
+        calendar = Calendar.getInstance();
+        timeFormat = new SimpleDateFormat("HH : mm", Locale.getDefault());
+
+        startTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(startTime);
+            }
+        });
+
+        endTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(endTime);
+            }
+        });
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = sharedPreferences.edit();
@@ -60,4 +89,27 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
     }
+    private void showTimePickerDialog(TextView textView) {
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        calendar.set(Calendar.MINUTE, minute);
+                        String selectedTime = timeFormat.format(calendar.getTime());
+                        textView.setText(selectedTime);
+                    }
+                },
+                hour,
+                minute,
+                true
+        );
+
+        timePickerDialog.show();
+    }
+
 }
