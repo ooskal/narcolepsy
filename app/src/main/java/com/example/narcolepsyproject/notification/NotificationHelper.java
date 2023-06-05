@@ -6,14 +6,14 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.telephony.SmsManager;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.narcolepsyproject.HomeActivity;
 import com.example.narcolepsyproject.R;
-
-import java.util.Set;
+import com.example.narcolepsyproject.notification.message.MessageSender;
 
 public class NotificationHelper {
 
@@ -22,16 +22,31 @@ public class NotificationHelper {
     public static final int NOTIFICATION_ID = 1234;
     private static int notificationCount = 3;
     private static boolean isButtonClicked = false;
+    public static MessageSender messageSender;
+
 
 
     //알림 실행 때마다 카운트 감소
     public static void addNotificationCount(){
 
         if(notificationCount!=0){
+
             notificationCount--;
         }
         else {
-            //문자메시지 보내기
+            //문자메시지 보내기..알림 사라지고 난 후에 바로 보내져야댐. 즉 타이머 사용해서 실행하기
+            String phoneNo = "01074785637";
+            String sms = "메시지테스트";
+            try {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(phoneNo, null, sms, null, null);
+//                Toast.makeText(getApplicationContext(), "전송 완료!", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+//                Toast.makeText(getApplicationContext(), "전송 오류!", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();//오류 원인이 찍힌다.
+                e.printStackTrace();
+            }
+
 
             //일단 리셋
             notificationCount=3;
@@ -102,4 +117,8 @@ public class NotificationHelper {
 
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
+
+
+
+
 }

@@ -16,7 +16,7 @@ public class ButtonClickReceiver extends BroadcastReceiver {
 
             //알림 수 리셋
             NotificationHelper.resetNotificationCount();
-            // 알림을 취소합니다.
+            // 알림 취소
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.cancel(NotificationHelper.NOTIFICATION_ID);
 
