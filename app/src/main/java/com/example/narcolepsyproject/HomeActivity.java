@@ -166,6 +166,6 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
 
     @Override
     public void onDangerousHeartRate() {
-        NotificationHelper.showNotification(HomeActivity.this, "횟수: ", "내용");
+        NotificationHelper.showNotification(HomeActivity.this, "심박수 알림", "남은 횟수: ");
     }
 }
