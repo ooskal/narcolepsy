@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     static final int SMS_RECEIVE_PERMISSON=1;
 
 
-    Button btn;
+//    Button btn;
 
 
 
@@ -47,8 +47,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
+//        btn = (Button) findViewById(R.id.testBtn);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(MainActivity.this, TestActivity.class));
+//            }
+//        });
         
         setTitle("기면증 방지앱 (가제)");
 

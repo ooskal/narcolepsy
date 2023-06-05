@@ -13,51 +13,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/day"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/weekButton"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="2dp"
-            android:text="1일"
-            />
+            android:text="주"
+            android:textSize="16sp"
+            android:layout_marginRight="3dp" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/week"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/monthButton"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="2dp"
-            android:text="1주" />
+            android:text="월"
+            android:textSize="16sp" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/InAMonth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="2dp"
-            android:text="1개월" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/InSixMonth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="2dp"
-            android:text="6개월" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="280dp"
         android:layout_height="280dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="90dp"
         android:background="@drawable/corner_radius"
         android:layout_centerHorizontal="true">
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/sleepChart"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"/>
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white" />
 
 
     </LinearLayout>
@@ -65,7 +54,7 @@
     <LinearLayout
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="410dp"
+        android:layout_marginTop="390dp"
         android:background="@drawable/corner_radius"
         android:layout_centerHorizontal="true"
         android:orientation="vertical">

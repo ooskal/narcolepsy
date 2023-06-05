@@ -89,6 +89,7 @@ public class NotificationHelper {
 
         String notificationString = String.valueOf(notificationCount);
 
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setContentTitle(title)
                 .setContentText(message + notificationString)

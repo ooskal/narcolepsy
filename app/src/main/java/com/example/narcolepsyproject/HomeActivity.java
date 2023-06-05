@@ -2,29 +2,21 @@ package com.example.narcolepsyproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import android.annotation.SuppressLint;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.narcolepsyproject.biosignals.HeartRateCallback;
+import com.example.narcolepsyproject.biosignals.heartrate.HeartRateCallback;
 
-import com.example.narcolepsyproject.biosignals.HeartRateManager;
-import com.example.narcolepsyproject.notification.ButtonClickReceiver;
+import com.example.narcolepsyproject.biosignals.heartrate.HeartRateManager;
 import com.example.narcolepsyproject.notification.NotificationHelper;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.XAxis;

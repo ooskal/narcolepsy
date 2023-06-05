@@ -6,11 +6,13 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.narcolepsyproject.db.SleepChart.SleepChartDao;
+import com.example.narcolepsyproject.db.SleepChart.SleepChartData;
 import com.example.narcolepsyproject.db.contact.ContactDao;
 import com.example.narcolepsyproject.db.contact.ContactData;
-import com.example.narcolepsyproject.db.sleep_session.SleepSessionDao;
 
-@Database(entities = {ContactData.class}, version = 1, exportSchema = false)
+
+@Database(entities = {ContactData.class, SleepChartData.class}, version = 1, exportSchema = false)
 public abstract class RoomDB extends RoomDatabase
 {
     private static RoomDB database;
@@ -30,6 +32,6 @@ public abstract class RoomDB extends RoomDatabase
     }
 
     public abstract ContactDao mainDao();
-    public abstract SleepSessionDao sleepSessionDao();
+    public abstract SleepChartDao sleepDao();
 
 }

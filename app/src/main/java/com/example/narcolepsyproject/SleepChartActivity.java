@@ -10,7 +10,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
+import com.example.narcolepsyproject.db.RoomDB;
+import com.example.narcolepsyproject.db.SleepChart.SleepChartData;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
@@ -23,13 +28,21 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Random;
 
 public class SleepChartActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    BarChart sleepChart;
+    Button weekButton;
+    Button monthButton;
+    boolean isWeekSelected = true;
+
+    //데이터베이스
+    RoomDB database;
+    List<SleepChartData> dataList = new ArrayList<>();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -73,25 +86,105 @@ public class SleepChartActivity extends AppCompatActivity {
                 }
             }
         });
+
+        weekButton = findViewById(R.id.weekButton);
+        monthButton = findViewById(R.id.monthButton);
+
+        //기본은 주 선택된 것처럼 색상 변경
+        weekButton.setTextColor(Color.WHITE);
+        weekButton.setBackgroundColor(Color.GRAY);
+        monthButton.setTextColor(Color.BLACK);
+        monthButton.setBackgroundColor(Color.WHITE);
+        setWeeklyGraph();
+        // 주 버튼 클릭 시
+        weekButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isWeekSelected = true;
+                updateButtonState();
+                setWeeklyGraph();
+            }
+        });
+        // 월 버튼 클릭 시
+        monthButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isWeekSelected = false;
+                updateButtonState();
+                setMonthlyGraph();
+            }
+        });
+    }
+    private String getDayOfWeek(int dayOfWeek) {
+        String[] daysOfWeek = {"일", "월", "화", "수", "목", "금", "토"};
+        return daysOfWeek[dayOfWeek - 1];
+    }
+    private void updateButtonState() {
+        if (isWeekSelected) {
+            weekButton.setTextColor(Color.WHITE);
+            weekButton.setBackgroundColor(Color.GRAY);
+            monthButton.setTextColor(Color.BLACK);
+            monthButton.setBackgroundColor(Color.WHITE);
+        } else {
+            weekButton.setTextColor(Color.BLACK);
+            weekButton.setBackgroundColor(Color.WHITE);
+            monthButton.setTextColor(Color.WHITE);
+            monthButton.setBackgroundColor(Color.GRAY);
+        }
+    }
+
+    //수면기록저장
+    private void saveSleepRecord(int numEntries) {
+        Random random = new Random();
+        for (int i = 0; i < numEntries; i++) {
+            int x = i;
+            int y = random.nextInt(8) + 1;
+
+            SleepChartData sleepData = new SleepChartData();
+            sleepData.setDayOfWeek(x);
+            sleepData.setHoursOfSleep(y);
+
+            database.sleepDao().insert(sleepData);
+        }
+
+    }
+
+    // 주간 그래프 설정
+    private void setWeeklyGraph() {
+
         BarChart sleepChart = findViewById(R.id.sleepChart);
 
+        database = RoomDB.getInstance(this);
+
+        //기존 데이터 삭제
+        database.sleepDao().delete();
+
         ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0, 7));   // 일요일
-        entries.add(new BarEntry(1, 6));   // 월요일
-        entries.add(new BarEntry(2, 5));   // 화요일
-        entries.add(new BarEntry(3, 8));   // 수요일
-        entries.add(new BarEntry(4, 7));   // 목요일
-        entries.add(new BarEntry(5, 6));   // 금요일
-        entries.add(new BarEntry(6, 5));   // 토요일
+
+        Random random = new Random();
+        int numEntries = 7; // 사용할 데이터 개수
+
+        //데이터 삽입
+        saveSleepRecord(7);
+
+        List<SleepChartData> dataList = database.sleepDao().getAllSleepChartData();
+
+        // 그래프에 데이터 삽입
+        for (SleepChartData data : dataList) {
+            int x = data.getDayOfWeek();
+            int y = data.getHoursOfSleep();
+
+            entries.add(new BarEntry(x, y));
+        }
 
         BarDataSet dataSet = new BarDataSet(entries, "Sleep Data");
-        dataSet.setColor(Color.BLUE);
+        dataSet.setColor(Color.rgb(255, 160, 72));
 
         ArrayList<String> labels = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
 
         for (int i = 0; i < 7; i++) {
-            labels.add(getDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK)));
+            labels.add(getDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK))); //day_of_week -> 특정 날짜의 요일
             calendar.add(Calendar.DAY_OF_WEEK, 1);
         }
 
@@ -111,11 +204,61 @@ public class SleepChartActivity extends AppCompatActivity {
         Description description = new Description();
         description.setEnabled(false);
         sleepChart.setDescription(description);
+        sleepChart.getLegend().setEnabled(false);
         sleepChart.invalidate();
-
     }
-    private String getDayOfWeek(int dayOfWeek) {
-        String[] daysOfWeek = {"일", "월", "화", "수", "목", "금", "토"};
-        return daysOfWeek[dayOfWeek - 1];
+
+    // 월간 그래프 설정
+    private void setMonthlyGraph() {
+        BarChart sleepChart = findViewById(R.id.sleepChart);
+
+        ArrayList<BarEntry> entries = new ArrayList<>();
+
+        //데이터 삽입
+        saveSleepRecord(30);
+
+        List<SleepChartData> dataList = database.sleepDao().getAllSleepChartData();
+
+        for (SleepChartData data : dataList) {
+            int x = data.getDayOfWeek();
+            int y = data.getHoursOfSleep();
+
+            entries.add(new BarEntry(x, y));
+        }
+
+
+        BarDataSet dataSet = new BarDataSet(entries, "Sleep Month Data");
+        dataSet.setColor(Color.rgb(255, 160, 72));
+        BarData data = new BarData(dataSet);
+        sleepChart.setData(data);
+
+        XAxis xAxis = sleepChart.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(getMonthDays()));
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setDrawAxisLine(false);
+
+        YAxis yAxis = sleepChart.getAxisLeft();
+        yAxis.setAxisMinimum(0f);
+
+        sleepChart.getAxisRight().setEnabled(false);
+        Description description = new Description();
+        description.setEnabled(false);
+        sleepChart.setDescription(description);
+        sleepChart.getLegend().setEnabled(false);
+        sleepChart.invalidate();
+    }
+
+    // 날짜 반환하는 메소드
+    private ArrayList<String> getMonthDays() {
+        ArrayList<String> days = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+
+        for (int i = 0; i < 30; i++) {
+            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+            days.add(String.valueOf(dayOfMonth));
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        return days;
     }
 }
