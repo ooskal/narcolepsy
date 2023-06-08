@@ -15,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,10 +24,12 @@ import android.widget.Toast;
 import com.example.narcolepsyproject.db.RoomDB;
 import com.example.narcolepsyproject.db.contact.ContactAdapter;
 import com.example.narcolepsyproject.db.contact.ContactData;
+import com.example.narcolepsyproject.notification.LocationHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     static final int SMS_RECEIVE_PERMISSON=1;
+    LocationHelper locationHelper;
 
 
 //    Button btn;
@@ -110,6 +114,13 @@ public class MainActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.RECEIVE_SMS}, SMS_RECEIVE_PERMISSON);
             }
         }
+
+        //위치 요청
+        locationHelper = new LocationHelper(MainActivity.this);
+        locationHelper.requestLocationUpdates();
+
+
+
 
 
 

@@ -1,19 +1,28 @@
 package com.example.narcolepsyproject;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.InputType;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.narcolepsyproject.biosignals.heartrate.HeartRateCallback;
+import com.example.narcolepsyproject.biosignals.heartrate.HeartRateManager;
+import com.example.narcolepsyproject.notification.NotificationHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;
@@ -25,9 +34,10 @@ public class SettingActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private TextView startTime, endTime;
+    private TextView startTime, endTime, repeat;
     private Calendar calendar;
     private SimpleDateFormat timeFormat;
+    private Switch notificationSwitch;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,6 +52,62 @@ public class SettingActivity extends AppCompatActivity {
         endTime = findViewById(R.id.endTime);
         calendar = Calendar.getInstance();
         timeFormat = new SimpleDateFormat("HH : mm", Locale.getDefault());
+        notificationSwitch = findViewById(R.id.notification_switch);
+        repeat = findViewById(R.id.repeat);
+
+        //반복 수 기본값 전달
+        NotificationHelper.setCount(Integer.parseInt(repeat.getText().toString()));
+
+        //반복 수
+        repeat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this);
+                final EditText input = new EditText(SettingActivity.this);
+                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                input.setText(repeat.getText());
+
+                builder.setView(input)
+                        .setTitle("반복 횟수를 입력하세요.")
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String newText = input.getText().toString();
+                                int intText = Integer.parseInt(newText);
+                                repeat.setText(newText);
+                                NotificationHelper.setCount(intText);
+
+                            }
+                        })
+                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+
+
+        //알림 활성화
+        notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // 스위치 상태 변경 시 호출되는 메서드
+                if (isChecked) {
+                    notificationSwitch.setText("켜짐");
+                    // 스위치가 활성화된 상태
+                    HeartRateManager.onAlert();
+                } else {
+                    notificationSwitch.setText("꺼짐");
+                    // 스위치가 비활성화된 상태
+                    HeartRateManager.offAlert();
+                }
+            }
+        });
 
         startTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +154,8 @@ public class SettingActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
     private void showTimePickerDialog(TextView textView) {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -111,5 +179,7 @@ public class SettingActivity extends AppCompatActivity {
 
         timePickerDialog.show();
     }
+
+
 
 }

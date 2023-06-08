@@ -94,30 +94,30 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="66dp"
-        android:layout_marginTop="290dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="263dp"
         android:background="@drawable/corner_radius"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="심박수"
             android:layout_margin="10dp"
-            android:textStyle="bold"
+            android:text="심박수"
+            android:textColor="@color/black"
             android:textSize="7pt"
-            android:textColor="@color/black"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/heartBeat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
             android:layout_marginLeft="45dp"
             android:layout_marginBottom="20dp"
-            android:textStyle="bold"
+            android:text="0"
+            android:textColor="@color/black"
             android:textSize="13pt"
-            android:textColor="@color/black"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 

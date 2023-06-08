@@ -54,6 +54,7 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
         heartbeatText = findViewById(R.id.heartBeat);
 
 
+
         //뷰 관련
 
         bottomNavigationView = findViewById(R.id.bottomNav);

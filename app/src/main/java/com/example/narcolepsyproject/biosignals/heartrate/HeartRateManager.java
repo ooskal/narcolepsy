@@ -14,11 +14,20 @@ public class HeartRateManager {
     private HeartRateCallback callback;
     private Timer timer;
     private Random random;
+    private static boolean isChecked;
 
     //생성자
     public HeartRateManager(HeartRateCallback callback) {
         this.callback = callback;
         this.random = new Random();
+    }
+
+    public static void onAlert(){
+        isChecked = true;
+    }
+
+    public static void offAlert(){
+        isChecked = false;
     }
 
     //3초마다 심박 업데이트
@@ -31,11 +40,11 @@ public class HeartRateManager {
                 callback.onHeartRateUpdate(heartRate);
                 Log.d("HeartRateManager", String.valueOf(heartRate));
 
-                if (heartRate < 55) {
+                if (isChecked == true && heartRate <= 60) {
                     callback.onDangerousHeartRate();
                 }
             }
-        }, 0, 3000); // 3초마다 실행
+        }, 0, 7000); // 7초마다 실행
     }
 
     //작동 중지
