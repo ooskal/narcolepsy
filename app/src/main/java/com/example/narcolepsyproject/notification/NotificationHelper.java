@@ -13,7 +13,11 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.narcolepsyproject.HomeActivity;
 import com.example.narcolepsyproject.R;
-import com.example.narcolepsyproject.notification.message.MessageSender;
+import com.example.narcolepsyproject.biosignals.heartrate.HeartRateManager;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class NotificationHelper {
 
@@ -21,35 +25,56 @@ public class NotificationHelper {
     private static final String NOTIFICATION_CHANNEL_ID = "your_channel_id";
     public static final int NOTIFICATION_ID = 1234;
     private static int notificationCount = 3;
-    private static boolean isButtonClicked = false;
-    public static MessageSender messageSender;
+    private static int fixedCount;
+    private static boolean isClicked = false;
+    private static int delayMillis = 6000; // 6초
 
+
+
+    public static void setCount(Integer count){
+        notificationCount = count;
+        fixedCount = count;
+    }
 
 
     //알림 실행 때마다 카운트 감소
-    public static void addNotificationCount(){
+    public static void changeNotificationCount(){
 
-        if(notificationCount!=0){
+        if(notificationCount!=1){
 
             notificationCount--;
         }
         else {
-            //문자메시지 보내기..알림 사라지고 난 후에 바로 보내져야댐. 즉 타이머 사용해서 실행하기
-            String phoneNo = "01074785637";
-            String sms = "메시지테스트";
-            try {
-                SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage(phoneNo, null, sms, null, null);
-//                Toast.makeText(getApplicationContext(), "전송 완료!", Toast.LENGTH_LONG).show();
-            } catch (Exception e) {
-//                Toast.makeText(getApplicationContext(), "전송 오류!", Toast.LENGTH_LONG).show();
-//                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();//오류 원인이 찍힌다.
-                e.printStackTrace();
-            }
+            notificationCount--;
+
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    // 여기에 실행할 기능을 작성합니다.
+                    // 예시: 콘솔에 메시지 출력
+                    if(isClicked == false){
+                        //문자메시지 보내기..알림 사라지고 난 후에 바로 보내져야댐. 즉 타이머 사용해서 실행하기
+                        String phoneNo = "01013245678";
+                        String sms = LocationHelper.getLocationText();
+                        try {
+                            SmsManager smsManager = SmsManager.getDefault();
+                            smsManager.sendTextMessage(phoneNo, null, sms, null, null);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        //알림 끄기
+                        HeartRateManager.offAlert();
 
 
-            //일단 리셋
-            notificationCount=3;
+                        //카운트 리셋
+                        notificationCount = fixedCount;
+                    }
+                }
+            }, delayMillis);
+
+
         }
 
     }
@@ -57,10 +82,10 @@ public class NotificationHelper {
 
 
     //버튼 클릭 되었을 때
-    public static void resetNotificationCount(){
-        notificationCount = 3;
+    public static void resetNotificationStatus(){
+        notificationCount = fixedCount;
+        isClicked = true;
     }
-
 
 
 
@@ -75,7 +100,11 @@ public class NotificationHelper {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-        addNotificationCount();
+        //버튼 상태 리셋
+        isClicked = false;
+
+        //카운트 감소
+        changeNotificationCount();
 
         Intent buttonClickIntent = new Intent(context, ButtonClickReceiver.class);
         buttonClickIntent.setAction("com.example.BUTTON_CLICK_ACTION");
@@ -87,7 +116,7 @@ public class NotificationHelper {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-        String notificationString = String.valueOf(notificationCount);
+        String notificationString = notificationCount + "/" + fixedCount;
 
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
