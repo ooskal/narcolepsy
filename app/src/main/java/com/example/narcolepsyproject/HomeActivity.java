@@ -52,6 +52,7 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
         setTitle("Home");
 
         heartbeatText = findViewById(R.id.heartBeat);
+        NotificationHelper.setPhoneNumber(this);
 
 
 

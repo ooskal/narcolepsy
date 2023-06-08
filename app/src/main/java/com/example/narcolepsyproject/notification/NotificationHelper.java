@@ -10,11 +10,16 @@ import android.telephony.SmsManager;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.room.Room;
 
 import com.example.narcolepsyproject.HomeActivity;
 import com.example.narcolepsyproject.R;
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateManager;
+import com.example.narcolepsyproject.db.RoomDB;
+import com.example.narcolepsyproject.db.contact.ContactDao;
+import com.example.narcolepsyproject.db.contact.ContactData;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,11 +34,32 @@ public class NotificationHelper {
     private static boolean isClicked = false;
     private static int delayMillis = 6000; // 6초
 
+    private static RoomDB db;
+
+
 
 
     public static void setCount(Integer count){
         notificationCount = count;
         fixedCount = count;
+    }
+
+    public static void setPhoneNumber(Context context) {
+        db = RoomDB.getInstance(context);
+        ContactDao contactDao = db.mainDao();
+
+        // 데이터베이스에서 모든 데이터 가져옴
+        Thread thread = new Thread(() -> {
+            List<ContactData> contactList = contactDao.getAll();
+
+            // 가져온 데이터
+            for (ContactData contactData : contactList) {
+                String phoneNumber = contactData.getPhoneNumber();
+                System.out.println("Phone Number: " + phoneNumber);
+
+            }
+        });
+        thread.start();
     }
 
 
