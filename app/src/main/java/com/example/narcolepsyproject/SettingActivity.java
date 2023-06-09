@@ -55,8 +55,6 @@ public class SettingActivity extends AppCompatActivity {
         notificationSwitch = findViewById(R.id.notification_switch);
         repeat = findViewById(R.id.repeat);
 
-        //반복 수 기본값 전달
-        NotificationHelper.setCount(Integer.parseInt(repeat.getText().toString()));
 
         //반복 수
         repeat.setOnClickListener(new View.OnClickListener() {
