@@ -6,13 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import com.example.narcolepsyproject.db.RoomDB;
 import com.example.narcolepsyproject.db.SleepChart.SleepChartData;
@@ -26,6 +27,14 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -149,31 +158,67 @@ public class SleepChartActivity extends AppCompatActivity {
 
     }
 
-    // 주간 그래프 설정
+    private List<List<Integer>> setSleepRecord(int numEntries) {
+        AssetManager assetManager = getAssets();
+        List<List<Integer>> result = new ArrayList<>();
+
+        try {
+            InputStream is = assetManager.open("json/sleepChart.json");
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader reader = new BufferedReader(isr);
+
+            StringBuilder buffer = new StringBuilder();
+            String line = reader.readLine();
+            while (line != null) {
+                buffer.append(line).append("\n");
+                line = reader.readLine();
+            }
+            String jsonData = buffer.toString();
+
+            JSONArray jsonArray = new JSONArray(jsonData);
+
+            List<Integer> xValue = new ArrayList<>();
+            List<Integer> yValue = new ArrayList<>();
+            // numEntries 값만큼 JSON 데이터 가져오기
+            int length = Math.min(jsonArray.length(), numEntries);
+            for (int i = 0; i < length; i++) {
+                JSONObject jo = jsonArray.getJSONObject(i);
+                int x = jo.getInt("x");
+                int y = jo.getInt("y");
+                xValue.add(x);
+                yValue.add(y);
+
+                List<Integer> message = xValue;
+                Log.d( "setSleepRecord: ", message.toString());
+            }
+            result.add(xValue);
+            result.add(yValue);
+
+            // TODO: 가져온 데이터를 사용하여 추가 작업 수행
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     private void setWeeklyGraph() {
 
         BarChart sleepChart = findViewById(R.id.sleepChart);
 
-        database = RoomDB.getInstance(this);
-
-        //기존 데이터 삭제
-        database.sleepDao().delete();
+        int numEntries = 7; // 사용할 데이터 개수
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        Random random = new Random();
-        int numEntries = 7; // 사용할 데이터 개수
+        List<List<Integer>> sleepChartDataSet = setSleepRecord(numEntries);
 
-        //데이터 삽입
-        saveSleepRecord(7);
 
-        List<SleepChartData> dataList = database.sleepDao().getAllSleepChartData();
-
-        // 그래프에 데이터 삽입
-        for (SleepChartData data : dataList) {
-            int x = data.getDayOfWeek();
-            int y = data.getHoursOfSleep();
-
+        for (int i = 0; i < numEntries; i++) {
+            int x = i;
+            int y = sleepChartDataSet.get(1).get(i); // 첫 번째 리스트에서 가져옵니다.
             entries.add(new BarEntry(x, y));
         }
 
@@ -183,8 +228,8 @@ public class SleepChartActivity extends AppCompatActivity {
         ArrayList<String> labels = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
 
-        for (int i = 0; i < 7; i++) {
-            labels.add(getDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK))); //day_of_week -> 특정 날짜의 요일
+        for (int i = 0; i < numEntries; i++) {
+            labels.add(getDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK)));
             calendar.add(Calendar.DAY_OF_WEEK, 1);
         }
 
@@ -212,17 +257,19 @@ public class SleepChartActivity extends AppCompatActivity {
     private void setMonthlyGraph() {
         BarChart sleepChart = findViewById(R.id.sleepChart);
 
+        int numEntries = 30; // 사용할 데이터 개수
+
         ArrayList<BarEntry> entries = new ArrayList<>();
+        // 앞의 0부터 6까지의 데이터를 맨 뒤로 이동시킴
+        List<List<Integer>> sleepChartDataSet = setSleepRecord(numEntries);
 
-        //데이터 삽입
-        saveSleepRecord(30);
+        List<Integer> firstEntries = sleepChartDataSet.get(1).subList(7, numEntries);
+        List<Integer> lastEntries = sleepChartDataSet.get(1).subList(0, 7);
+        firstEntries.addAll(lastEntries);
 
-        List<SleepChartData> dataList = database.sleepDao().getAllSleepChartData();
-
-        for (SleepChartData data : dataList) {
-            int x = data.getDayOfWeek();
-            int y = data.getHoursOfSleep();
-
+        for (int i = 0; i < numEntries; i++) {
+            int x = i;
+            int y = firstEntries.get(i);
             entries.add(new BarEntry(x, y));
         }
 
