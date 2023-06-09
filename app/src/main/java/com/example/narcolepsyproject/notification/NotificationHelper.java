@@ -80,7 +80,7 @@ public class NotificationHelper {
                     // 여기에 실행할 기능을 작성합니다.
                     // 예시: 콘솔에 메시지 출력
                     if(isClicked == false){
-                        //문자메시지 보내기..알림 사라지고 난 후에 바로 보내져야댐. 즉 타이머 사용해서 실행하기
+                        //문자메시지 보내기
                         String phoneNo = "01013245678";
                         String sms = LocationHelper.getLocationText();
                         try {
