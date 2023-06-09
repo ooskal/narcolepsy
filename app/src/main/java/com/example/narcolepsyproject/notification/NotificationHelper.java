@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.telephony.SmsManager;
-import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -35,7 +34,7 @@ public class NotificationHelper {
     private static boolean isClicked = false;
     private static int delayMillis = 6000; // 6초
 
-    private static RoomDB db;
+
 
 
 
@@ -45,23 +44,9 @@ public class NotificationHelper {
         fixedCount = count;
     }
 
-    public static void setPhoneNumber(Context context) {
-        db = RoomDB.getInstance(context);
-        ContactDao contactDao = db.mainDao();
 
-        // 데이터베이스에서 모든 데이터 가져옴
-        Thread thread = new Thread(() -> {
-            List<ContactData> contactList = contactDao.getAll();
 
-            // 가져온 데이터
-            for (ContactData contactData : contactList) {
-                String phoneNumber = contactData.getPhoneNumber();
-                System.out.println("Phone Number: " + phoneNumber);
 
-            }
-        });
-        thread.start();
-    }
 
 
     //알림 실행 때마다 카운트 감소
@@ -81,7 +66,7 @@ public class NotificationHelper {
                     // 여기에 실행할 기능을 작성합니다.
                     // 예시: 콘솔에 메시지 출력
                     if(isClicked == false){
-                        //문자메시지 보내기
+                        //문자메시지 보내기..알림 사라지고 난 후에 바로 보내져야댐. 즉 타이머 사용해서 실행하기
                         String phoneNo = "01013245678";
                         String sms = LocationHelper.getLocationText();
                         try {
