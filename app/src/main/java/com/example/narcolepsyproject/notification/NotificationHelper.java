@@ -7,17 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.telephony.SmsManager;
-import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.room.Room;
 
 import com.example.narcolepsyproject.HomeActivity;
 import com.example.narcolepsyproject.R;
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateManager;
 import com.example.narcolepsyproject.db.RoomDB;
-import com.example.narcolepsyproject.db.contact.ContactDao;
 import com.example.narcolepsyproject.db.contact.ContactData;
 
 import java.util.List;
@@ -35,35 +32,11 @@ public class NotificationHelper {
     private static boolean isClicked = false;
     private static int delayMillis = 6000; // 6초
 
-    private static RoomDB db;
-
-
-
-
-
 
 
     public static void setCount(Integer count){
         fixedCount = count;
         notificationCount  = fixedCount;
-    }
-
-    public static void setPhoneNumber(Context context) {
-        db = RoomDB.getInstance(context);
-        ContactDao contactDao = db.mainDao();
-
-        // 데이터베이스에서 모든 데이터 가져옴
-        Thread thread = new Thread(() -> {
-            List<ContactData> contactList = contactDao.getAll();
-
-            // 가져온 데이터
-            for (ContactData contactData : contactList) {
-                String phoneNumber = contactData.getPhoneNumber();
-                System.out.println("Phone Number: " + phoneNumber);
-
-            }
-        });
-        thread.start();
     }
 
 
@@ -81,31 +54,27 @@ public class NotificationHelper {
         else {
             notificationCount--;
 
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
+            new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    Timer timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (!isClicked) {
+                                // 메세지 전송
+                                MessageSender.sendMessage();
 
-                    if(isClicked == false){
-                        //문자메시지 보내기..알림 사라지고 난 후에 바로 보내져야댐. 즉 타이머 사용해서 실행하기
-                        String phoneNo = "01013245678";
-                        String sms = LocationHelper.getLocationText();
-                        try {
-                            SmsManager smsManager = SmsManager.getDefault();
-                            smsManager.sendTextMessage(phoneNo, null, sms, null, null);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                                // 알림 끄기
+                                HeartRateManager.offAlert();
+
+                                // 카운트 리셋
+                                notificationCount = fixedCount;
+                            }
                         }
-
-                        //알림 끄기
-                        HeartRateManager.offAlert();
-
-
-                        //카운트 리셋
-                        notificationCount = fixedCount;
-                    }
+                    }, delayMillis);
                 }
-            }, delayMillis);
+            }).start();
 
 
         }

@@ -30,21 +30,32 @@ public class HeartRateManager {
         isChecked = false;
     }
 
-    //3초마다 심박 업데이트
+    //심박 업데이트
     public void startHeartRateMonitoring() {
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                int heartRate = generateRandomHeartRate();
-                callback.onHeartRateUpdate(heartRate);
-                Log.d("HeartRateManager", String.valueOf(heartRate));
-
-                if (isChecked == true && heartRate <= 60) {
-                    callback.onDangerousHeartRate();
-                }
+                Timer timer = new Timer();
+                timer.scheduleAtFixedRate(new TimerTask() {
+                    @Override
+                    public void run() {
+                        // 심박 업데이트 작업 수행
+                        updateHeartRate();
+                    }
+                }, 0, 7000); // 7초마다 실행
             }
-        }, 0, 7000); // 7초마다 실행
+        }).start();
+    }
+
+
+    private void updateHeartRate() {
+        int heartRate = generateRandomHeartRate();
+        callback.onHeartRateUpdate(heartRate);
+        Log.d("HeartRateManager", String.valueOf(heartRate));
+
+        if (isChecked && heartRate <= 60) {
+            callback.onDangerousHeartRate();
+        }
     }
 
     //작동 중지

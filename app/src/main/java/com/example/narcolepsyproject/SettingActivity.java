@@ -38,6 +38,7 @@ public class SettingActivity extends AppCompatActivity {
     private Calendar calendar;
     private SimpleDateFormat timeFormat;
     private Switch notificationSwitch;
+    private Integer repeatNum;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -75,6 +76,7 @@ public class SettingActivity extends AppCompatActivity {
                                 repeat.setText(newText);
                                 NotificationHelper.setCount(intText);
 
+
                             }
                         })
                         .setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -99,6 +101,7 @@ public class SettingActivity extends AppCompatActivity {
                     notificationSwitch.setText("켜짐");
                     // 스위치가 활성화된 상태
                     HeartRateManager.onAlert();
+
                 } else {
                     notificationSwitch.setText("꺼짐");
                     // 스위치가 비활성화된 상태

@@ -15,7 +15,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.narcolepsyproject.notification.MessageSender;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
 
 public class MessageActivity extends AppCompatActivity {
 
@@ -66,7 +69,11 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
-        String[] messages = {"발신기록1", "발신기록2"};
+
+        List<String> formattedDataList = MessageSender.getMessageData();
+        String[] messages = formattedDataList.toArray(new String[0]);
+
+
 
         ListView lv = (ListView) findViewById(R.id.messageList);
 
