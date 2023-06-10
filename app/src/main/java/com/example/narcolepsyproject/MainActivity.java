@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //메세지 권한 확인
-        int permissonCheck= ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS);
+        int permissonCheck= ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS);
         if(permissonCheck == PackageManager.PERMISSION_GRANTED){
             Toast.makeText(getApplicationContext(), "SMS 수신권한 있음", Toast.LENGTH_SHORT).show();
         }else{
@@ -106,12 +106,12 @@ public class MainActivity extends AppCompatActivity {
             //ActivityCompat.shouldShowRequestPermissionRationale 메소드의 반환값이 true가 된다.
             //단, 사용자가 "Don't ask again"을 체크한 경우
             //거부하더라도 false를 반환하여, 직접 사용자가 권한을 부여하지 않는 이상, 권한을 요청할 수 없게 된다.
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECEIVE_SMS)){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)){
                 //이곳에 권한이 왜 필요한지 설명하는 Toast나 dialog를 띄워준 후, 다시 권한을 요청한다.
                 Toast.makeText(getApplicationContext(), "SMS권한이 필요합니다", Toast.LENGTH_SHORT).show();
-                ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.RECEIVE_SMS}, SMS_RECEIVE_PERMISSON);
+                ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.SEND_SMS}, SMS_RECEIVE_PERMISSON);
             }else{
-                ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.RECEIVE_SMS}, SMS_RECEIVE_PERMISSON);
+                ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.SEND_SMS}, SMS_RECEIVE_PERMISSON);
             }
         }
 

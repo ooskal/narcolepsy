@@ -28,8 +28,7 @@ public class MessageSender {
 
     public static void sendMessage(){
 
-        String sms = "[기면증 안내 문자] 현재 사용자가 알림에 반복적으로 응답이 없습니다. 신속히 사용자의 상태를 확인하고 조치 바랍니다.\n" +
-                "위치: "+LocationHelper.getLocationText();
+        String sms = "[기면증 안내 문자] 현재 사용자가 알림에 반복적으로 응답이 없습니다. 신속히 사용자의 상태를 확인하고 조치 바랍니다.\n";
 
         for(ContactData contactData: contactList){
 
