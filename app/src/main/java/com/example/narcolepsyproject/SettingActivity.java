@@ -20,8 +20,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.example.narcolepsyproject.biosignals.heartrate.HeartRateCallback;
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateManager;
+import com.example.narcolepsyproject.biosignals.heartrate.HeartRateMonitor;
 import com.example.narcolepsyproject.notification.NotificationHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateCallback;
 
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateManager;
+import com.example.narcolepsyproject.biosignals.heartrate.HeartRateMonitor;
 import com.example.narcolepsyproject.db.contact.ContactData;
 import com.example.narcolepsyproject.notification.NotificationHelper;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -32,7 +32,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class HomeActivity extends AppCompatActivity implements HeartRateCallback {
 
