@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.narcolepsyproject.db.RoomDB;
 import com.example.narcolepsyproject.db.SleepChart.SleepChartData;
@@ -123,6 +124,26 @@ public class SleepChartActivity extends AppCompatActivity {
                 setMonthlyGraph();
             }
         });
+
+        String upOrDown = "증가";
+        int percent = 0;
+        TextView timeText = findViewById(R.id.timeText2);
+        List<List<Integer>> timeCheckDataSet = setSleepRecord(30);
+        int yesterdayCheck = timeCheckDataSet.get(1).subList(6, 7).get(0);
+        int twoDayAgoCheck = timeCheckDataSet.get(1).subList(5, 6).get(0);
+        if (yesterdayCheck > twoDayAgoCheck) {
+            upOrDown = "증가";
+            percent = (yesterdayCheck - twoDayAgoCheck) * 100 / twoDayAgoCheck;
+        } else {
+            upOrDown = "감소";
+            percent = (twoDayAgoCheck - yesterdayCheck) * 100 / yesterdayCheck;
+        }
+        String reportMessage = "이틀 전과 비교해서 전일 수면 시간이 약 " + percent + "%만큼 " + upOrDown + "했습니다.";
+        if (yesterdayCheck != twoDayAgoCheck) {
+            timeText.setText(reportMessage);
+        } else {
+            timeText.setText("이틀 전과 어제의 수면 시간이 같습니다.");
+        }
     }
     private String getDayOfWeek(int dayOfWeek) {
         String[] daysOfWeek = {"일", "월", "화", "수", "목", "금", "토"};
@@ -158,7 +179,7 @@ public class SleepChartActivity extends AppCompatActivity {
 
     }
 
-    private List<List<Integer>> setSleepRecord(int numEntries) {
+    public List<List<Integer>> setSleepRecord(int numEntries) {
         AssetManager assetManager = getAssets();
         List<List<Integer>> result = new ArrayList<>();
 

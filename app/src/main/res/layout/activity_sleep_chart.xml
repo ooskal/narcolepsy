@@ -74,23 +74,6 @@
             android:text="전일 대비 수면 시간이 23% 증가하였습니다."
             android:textSize="10dp"
             android:layout_marginStart="20dp"/>
-        <TextView
-            android:id="@+id/frequencyText1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="빈도"
-            android:textSize="20dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            />
-        <TextView
-            android:id="@+id/frequencyText2"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="전일 대비 수면 빈도가 감소하였습니다."
-            android:textSize="10dp"
-            android:layout_marginStart="20dp"/>
-
 
     </LinearLayout>
 
