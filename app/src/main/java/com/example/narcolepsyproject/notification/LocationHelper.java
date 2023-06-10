@@ -50,7 +50,7 @@ public class LocationHelper {
     public void requestLocationUpdates() {
         try {
             // 위치 업데이트 요청
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, locationListener);
         } catch (SecurityException e) {
             e.printStackTrace();
         }
@@ -66,6 +66,6 @@ public class LocationHelper {
     }
 
     public static String getLocationText(){
-        return locationStr;
+        return "(현재 위치) "+ locationStr;
     }
 }

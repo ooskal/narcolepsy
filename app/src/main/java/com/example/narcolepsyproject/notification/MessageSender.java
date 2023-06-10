@@ -28,7 +28,9 @@ public class MessageSender {
 
     public static void sendMessage(){
 
-        String sms = "[기면증 안내 문자] 현재 사용자가 알림에 반복적으로 응답이 없습니다. 신속히 사용자의 상태를 확인하고 조치 바랍니다.\n";
+        String sms = "[기면증 안내 문자] 현재 사용자가 알림에 반복적으로 응답이 없습니다. 신속히 사용자의 상태를 확인하고 조치 바랍니다.";
+        String location = LocationHelper.getLocationText();
+
 
         for(ContactData contactData: contactList){
 
@@ -37,17 +39,19 @@ public class MessageSender {
             try {
                 SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage(phoneNo, null, sms, null, null);
+
+                smsManager.sendTextMessage(phoneNo, null, location, null, null);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
         }
-        formatData(sms);
+        formatData(location);
 
     }
 
-    public static void formatData(String sms){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static void formatData(String location){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String dateStr = dateFormat.format(new Date());
 
         StringJoiner joiner = new StringJoiner(",");
@@ -57,7 +61,7 @@ public class MessageSender {
         }
         String contactStr = joiner.toString();
 
-        String text = "날짜: " + dateStr + "\n수신자: " + contactStr + "\n문자내용: " + sms;
+        String text = "날짜: " + dateStr + "\n수신자: " + contactStr + "\n위치: " + location;
         formattedDataList.add(text);
     }
 
