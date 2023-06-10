@@ -47,7 +47,7 @@ public class SettingActivity extends AppCompatActivity {
     private Switch notificationSwitch;
     private Integer repeatNum;
     RoomDB database;
-    List<SettingData> dataList = new ArrayList<>();
+    SettingData dataList;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -69,13 +69,10 @@ public class SettingActivity extends AppCompatActivity {
         database = RoomDB.getInstance(this);
 
         // 데이터 목록을 가져옴
-        dataList = database.settingDao().getAllSettingData();
-        if (!dataList.isEmpty()) {
-            SettingData latestSettingData = dataList.get(dataList.size() - 1);
-            int repeatCount = latestSettingData.getRepeatCount();
+        Integer repeatCount = database.settingDao().getRepeatCountData();
+        if (repeatCount != null) {
             repeat.setText(String.valueOf(repeatCount));
         }
-
         // 반복 수
         repeat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,10 +123,24 @@ public class SettingActivity extends AppCompatActivity {
                     // 스위치가 활성화된 상태
                     HeartRateManager.onAlert();
 
+                    // Room DB에 값을 저장
+                    SettingData settingData = new SettingData();
+                    settingData.setActivate(true);
+
+                    // DB에 값 삽입
+                    database.settingDao().insert(settingData);
+
                 } else {
                     notificationSwitch.setText("꺼짐");
                     // 스위치가 비활성화된 상태
                     HeartRateManager.offAlert();
+
+                    // Room DB에 값을 저장
+                    SettingData settingData = new SettingData();
+                    settingData.setActivate(false);
+
+                    // DB에 값 삽입
+                    database.settingDao().insert(settingData);
                 }
             }
         });

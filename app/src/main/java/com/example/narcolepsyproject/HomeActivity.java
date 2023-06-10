@@ -69,10 +69,11 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
         contactDataList = ContactData.getAllContactData(this);
 
         SettingDao settingDao = database.settingDao();
-        List<Integer> dataList = settingDao.getRepeatCountData();
+        Integer dataList = settingDao.getRepeatCountData();
+        Boolean activate = settingDao.getActivateData();
 
         String logMessage = "Contact Data List: " + contactDataList.toString();
-        System.out.println(logMessage + dataList.toString());
+        System.out.println(logMessage + dataList.toString() + activate.toString());
 
 
 

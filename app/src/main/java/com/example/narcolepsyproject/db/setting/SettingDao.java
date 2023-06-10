@@ -25,6 +25,10 @@ public interface SettingDao {
     List<SettingData> getAllSettingData();
 
     @Query("SELECT repeatCount FROM setting")
-    List<Integer> getRepeatCountData();
+    Integer getRepeatCountData();
+
+    @Query("SELECT activate FROM setting")
+    Boolean getActivateData();
+
 
 }
