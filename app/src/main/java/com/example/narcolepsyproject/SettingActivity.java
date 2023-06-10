@@ -22,14 +22,21 @@ import android.widget.TimePicker;
 
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateCallback;
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateManager;
+import com.example.narcolepsyproject.db.RoomDB;
+import com.example.narcolepsyproject.db.contact.ContactData;
+import com.example.narcolepsyproject.db.setting.SettingDao;
+import com.example.narcolepsyproject.db.setting.SettingData;
 import com.example.narcolepsyproject.notification.NotificationHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class SettingActivity extends AppCompatActivity {
+
 
     private BottomNavigationView bottomNavigationView;
     private SharedPreferences sharedPreferences;
@@ -39,6 +46,8 @@ public class SettingActivity extends AppCompatActivity {
     private SimpleDateFormat timeFormat;
     private Switch notificationSwitch;
     private Integer repeatNum;
+    RoomDB database;
+    List<SettingData> dataList = new ArrayList<>();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -56,8 +65,18 @@ public class SettingActivity extends AppCompatActivity {
         notificationSwitch = findViewById(R.id.notification_switch);
         repeat = findViewById(R.id.repeat);
 
+        // Room DB 인스턴스 생성
+        database = RoomDB.getInstance(this);
 
-        //반복 수
+        // 데이터 목록을 가져옴
+        dataList = database.settingDao().getAllSettingData();
+        if (!dataList.isEmpty()) {
+            SettingData latestSettingData = dataList.get(dataList.size() - 1);
+            int repeatCount = latestSettingData.getRepeatCount();
+            repeat.setText(String.valueOf(repeatCount));
+        }
+
+        // 반복 수
         repeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +95,12 @@ public class SettingActivity extends AppCompatActivity {
                                 repeat.setText(newText);
                                 NotificationHelper.setCount(intText);
 
+                                // Room DB에 값을 저장
+                                SettingData settingData = new SettingData();
+                                settingData.setRepeatCount(intText);
 
+                                // DB에 값 삽입
+                                database.settingDao().insert(settingData);
                             }
                         })
                         .setNegativeButton("취소", new DialogInterface.OnClickListener() {

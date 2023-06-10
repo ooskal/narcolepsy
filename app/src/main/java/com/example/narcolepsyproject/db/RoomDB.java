@@ -5,14 +5,17 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 import com.example.narcolepsyproject.db.SleepChart.SleepChartDao;
 import com.example.narcolepsyproject.db.SleepChart.SleepChartData;
 import com.example.narcolepsyproject.db.contact.ContactDao;
 import com.example.narcolepsyproject.db.contact.ContactData;
+import com.example.narcolepsyproject.db.setting.SettingDao;
+import com.example.narcolepsyproject.db.setting.SettingData;
 
-
-@Database(entities = {ContactData.class, SleepChartData.class}, version = 1, exportSchema = false)
+@TypeConverters(Converters.class)
+@Database(entities = {ContactData.class, SleepChartData.class, SettingData.class}, version = 1, exportSchema = false)
 public abstract class RoomDB extends RoomDatabase
 {
     private static RoomDB database;
@@ -33,5 +36,6 @@ public abstract class RoomDB extends RoomDatabase
 
     public abstract ContactDao mainDao();
     public abstract SleepChartDao sleepDao();
+    public abstract SettingDao settingDao();
 
 }
