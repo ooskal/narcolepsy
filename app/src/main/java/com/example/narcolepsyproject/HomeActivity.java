@@ -18,7 +18,10 @@ import android.widget.TextView;
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateCallback;
 
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateManager;
+import com.example.narcolepsyproject.db.RoomDB;
 import com.example.narcolepsyproject.db.contact.ContactData;
+import com.example.narcolepsyproject.db.setting.SettingDao;
+import com.example.narcolepsyproject.db.setting.SettingData;
 import com.example.narcolepsyproject.notification.NotificationHelper;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -45,6 +48,9 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
     TextView heartbeatText;
 
 
+    RoomDB database;
+
+
 
 
     @SuppressLint("MissingInflatedId")
@@ -55,13 +61,20 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
 
         setTitle("Home");
 
+        database = RoomDB.getInstance(this);
+
         heartbeatText = findViewById(R.id.heartBeat);
 //        ContactData.getAllContactData(this);
         List<ContactData> contactDataList = new ArrayList<>();
         contactDataList = ContactData.getAllContactData(this);
 
+        SettingDao settingDao = database.settingDao();
+        List<Integer> dataList = settingDao.getRepeatCountData();
+
         String logMessage = "Contact Data List: " + contactDataList.toString();
-        System.out.println(logMessage);
+        System.out.println(logMessage + dataList.toString());
+
+
 
 
 
