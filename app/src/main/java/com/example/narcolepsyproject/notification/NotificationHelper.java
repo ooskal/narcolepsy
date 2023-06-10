@@ -31,12 +31,24 @@ public class NotificationHelper {
     private static int fixedCount;
     private static boolean isClicked = false;
     private static int delayMillis = 6000; // 6초
+    private static Context context;
+
+    public NotificationHelper(Context context) {
+        this.context = context;
+    }
 
 
 
     public static void setCount(Integer count){
         fixedCount = count;
         notificationCount  = fixedCount;
+    }
+
+
+    //알림 취소
+    public static void cancelAlert(Context context){
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(NotificationHelper.NOTIFICATION_ID);
     }
 
 
@@ -67,6 +79,7 @@ public class NotificationHelper {
 
                                 // 알림 끄기
                                 HeartRateManager.offAlert();
+                                cancelAlert(context);
 
                                 // 카운트 리셋
                                 notificationCount = fixedCount;

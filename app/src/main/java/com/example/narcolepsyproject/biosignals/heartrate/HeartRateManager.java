@@ -1,8 +1,13 @@
 package com.example.narcolepsyproject.biosignals.heartrate;
 
+
+
+import android.app.NotificationManager;
+import android.content.Context;
 import android.util.Log;
 
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateCallback;
+import com.example.narcolepsyproject.notification.NotificationHelper;
 
 import java.util.Random;
 import java.util.Timer;
@@ -14,6 +19,7 @@ public class HeartRateManager {
     private HeartRateCallback callback;
     private Timer timer;
     private Random random;
+    //알림 활성화 상태
     private static boolean isChecked;
 
     //생성자
@@ -29,6 +35,9 @@ public class HeartRateManager {
     public static void offAlert(){
         isChecked = false;
     }
+
+
+
 
     //심박 업데이트
     public void startHeartRateMonitoring() {

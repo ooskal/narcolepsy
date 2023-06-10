@@ -18,13 +18,10 @@ public class MessageSender {
     private static Context context;
     private static List<ContactData> contactList = ContactData.getAllContactData(context);
     private static List<String> smsList = new ArrayList<>();
-    private static MessageCallback callback;
+
     private static List<String> formattedDataList = new ArrayList<>();
 
-    public MessageSender(Context context, MessageCallback callback) {
-        this.context = context;
-        this.callback = callback;
-    }
+
 
     public static void sendMessage(){
 
