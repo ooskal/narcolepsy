@@ -68,9 +68,12 @@ public class SettingActivity extends AppCompatActivity {
         // Room DB 인스턴스 생성
         database = RoomDB.getInstance(this);
 
+        List<SettingData> dataList = new ArrayList<>();
         // 데이터 목록을 가져옴
-        Integer repeatCount = database.settingDao().getRepeatCountData();
-        if (repeatCount != null) {
+        dataList = database.settingDao().getAllSettingData();
+        if (!dataList.isEmpty()) {
+            SettingData latestSettingData = dataList.get(dataList.size() - 1);
+            int repeatCount = latestSettingData.getRepeatCount();
             repeat.setText(String.valueOf(repeatCount));
         }
         // 반복 수
@@ -91,6 +94,9 @@ public class SettingActivity extends AppCompatActivity {
                                 int intText = Integer.parseInt(newText);
                                 repeat.setText(newText);
                                 NotificationHelper.setCount(intText);
+
+
+
 
                                 // Room DB에 값을 저장
                                 SettingData settingData = new SettingData();
@@ -113,38 +119,44 @@ public class SettingActivity extends AppCompatActivity {
         });
 
 
+
+
+
+
+
+
+
+
         //알림 활성화
         notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SettingData settingData = new SettingData();
                 // 스위치 상태 변경 시 호출되는 메서드
                 if (isChecked) {
                     notificationSwitch.setText("켜짐");
                     // 스위치가 활성화된 상태
                     HeartRateManager.onAlert();
-
                     // Room DB에 값을 저장
-                    SettingData settingData = new SettingData();
-                    settingData.setActivate(true);
 
-                    // DB에 값 삽입
-                    database.settingDao().insert(settingData);
 
                 } else {
                     notificationSwitch.setText("꺼짐");
                     // 스위치가 비활성화된 상태
                     HeartRateManager.offAlert();
 
-                    // Room DB에 값을 저장
-                    SettingData settingData = new SettingData();
-                    settingData.setActivate(false);
-
-                    // DB에 값 삽입
-                    database.settingDao().insert(settingData);
                 }
-            }
-        });
 
+                // DB에 값 삽입
+                database.settingDao().insert(settingData);
+
+                // 스위치 텍스트 변경
+                notificationSwitch.setText(isChecked ? "켜짐" : "꺼짐");
+
+
+            }
+
+        });
         startTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

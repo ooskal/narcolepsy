@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -21,7 +20,6 @@ import com.example.narcolepsyproject.biosignals.heartrate.HeartRateManager;
 import com.example.narcolepsyproject.db.RoomDB;
 import com.example.narcolepsyproject.db.contact.ContactData;
 import com.example.narcolepsyproject.db.setting.SettingDao;
-import com.example.narcolepsyproject.db.setting.SettingData;
 import com.example.narcolepsyproject.notification.NotificationHelper;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -35,7 +33,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class HomeActivity extends AppCompatActivity implements HeartRateCallback {
 
@@ -69,11 +66,11 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
         contactDataList = ContactData.getAllContactData(this);
 
         SettingDao settingDao = database.settingDao();
-        Integer dataList = settingDao.getRepeatCountData();
-        Boolean activate = settingDao.getActivateData();
+        List<Integer> dataList = settingDao.getRepeatCountData();
+        Integer latestSettingData = dataList.get(dataList.size() - 1);
 
         String logMessage = "Contact Data List: " + contactDataList.toString();
-        System.out.println(logMessage + dataList.toString() + activate.toString());
+        System.out.println(logMessage + dataList.toString()+latestSettingData);
 
 
 

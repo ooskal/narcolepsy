@@ -21,14 +21,13 @@ public interface SettingDao {
     void delete(SettingData settingData);
 
 
+
     @Query("SELECT * FROM setting")
     List<SettingData> getAllSettingData();
 
     @Query("SELECT repeatCount FROM setting")
-    Integer getRepeatCountData();
+    List<Integer> getRepeatCountData();
 
-    @Query("SELECT activate FROM setting")
-    Boolean getActivateData();
 
 
 }
