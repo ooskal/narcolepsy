@@ -32,6 +32,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class SettingActivity extends AppCompatActivity {
@@ -48,6 +49,7 @@ public class SettingActivity extends AppCompatActivity {
     RoomDB database;
     SettingData dataList;
     HeartRateManager heartRateManager;
+    SettingSingleton settingSingleton = SettingSingleton.getInstance();
 
 
     @SuppressLint("MissingInflatedId")
@@ -69,10 +71,12 @@ public class SettingActivity extends AppCompatActivity {
         database = RoomDB.getInstance(this);
 
         // 데이터 목록을 가져옴
-        Integer repeatCount = database.settingDao().getRepeatCountData();
-        if (repeatCount != null) {
-            repeat.setText(String.valueOf(repeatCount));
-        }
+//        List<Integer> repeatCount = database.settingDao().getRepeatCountData();
+//        if (repeatCount != null) {
+//            repeat.setText(String.valueOf(repeatCount.get(repeatCount.size() - 1)));
+//        }
+
+        repeat.setText(String.valueOf(settingSingleton.getRepeat()));
         // 반복 수
         repeat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +94,8 @@ public class SettingActivity extends AppCompatActivity {
                                 String newText = input.getText().toString();
                                 int intText = Integer.parseInt(newText);
                                 repeat.setText(newText);
+
+                                settingSingleton.setRepeat(intText);
 
 
                                 // Room DB에 값을 저장
@@ -123,10 +129,12 @@ public class SettingActivity extends AppCompatActivity {
                 if (isChecked) {
                     notificationSwitch.setText("켜짐");
                     // 스위치가 활성화된 상태
-                    HeartRateManager.onAlert();
+//                    HeartRateManager.onAlert();
                     NotificationHelper.setCount();
                     SettingSingleton isSwitchOnSingleton = getInstance();
                     isSwitchOnSingleton.setSwitchOn(true);
+
+
 
                     // Room DB에 값을 저장
                     SettingData settingData = new SettingData();
@@ -138,7 +146,7 @@ public class SettingActivity extends AppCompatActivity {
                 } else {
                     notificationSwitch.setText("꺼짐");
                     // 스위치가 비활성화된 상태
-                    HeartRateManager.offAlert();
+//                    HeartRateManager.offAlert();
 
                     SettingSingleton isSwitchOnSingleton = getInstance();
                     isSwitchOnSingleton.setSwitchOn(false);
@@ -246,5 +254,14 @@ public class SettingActivity extends AppCompatActivity {
         }
         startTime.setText(settingSingleton.getStartTime());
         endTime.setText(settingSingleton.getEndTime());
+
+
+        repeat.setText(String.valueOf(settingSingleton.getRepeat()));
+
+//        database = RoomDB.getInstance(this);
+//        List<Integer> repeatCount = database.settingDao().getRepeatCountData();
+//        repeat.setText(String.valueOf(repeatCount.get(repeatCount.size() - 1)));
+
+
     }
 }

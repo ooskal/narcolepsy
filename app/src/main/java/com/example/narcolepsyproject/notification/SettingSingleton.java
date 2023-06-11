@@ -6,11 +6,13 @@ public class SettingSingleton {
     private static SettingSingleton instance;
     private String startTime;
     private String endTime;
+    private int repeat;
 
     public SettingSingleton() {
         this.isSwitchOn = false;
         this.startTime = "00 : 00";
         this.endTime = "00 : 00";
+        this.repeat = 3;
     }
 
     public static SettingSingleton getInstance() {
@@ -43,4 +45,10 @@ public class SettingSingleton {
     public String getEndTime() {
         return endTime;
     }
+
+    public int getRepeat(){return repeat;}
+
+    public void setRepeat(int num){this.repeat = num;}
+
+
 }

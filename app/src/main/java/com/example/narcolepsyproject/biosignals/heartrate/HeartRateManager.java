@@ -8,6 +8,7 @@ import android.util.Log;
 
 
 import com.example.narcolepsyproject.notification.NotificationHelper;
+import com.example.narcolepsyproject.notification.SettingSingleton;
 
 import java.util.Random;
 import java.util.Timer;
@@ -27,8 +28,8 @@ public class HeartRateManager {
     private static boolean isChecked;
     private HeartRateCallback callback;
     private static boolean isHeartRateMonitoringStarted;
-
     private static HeartRateManager instance;
+    private static SettingSingleton settingSingleton = SettingSingleton.getInstance();
 
     private HeartRateManager(HeartRateCallback callback) {
         this.callback = callback;
@@ -49,7 +50,7 @@ public class HeartRateManager {
     }
 
     public static void offAlert(){
-        isChecked = false;
+        settingSingleton.setSwitchOn(false);
     }
 
 
@@ -92,11 +93,14 @@ public class HeartRateManager {
 
     static void updateHeartRate(HeartRateCallback callback) {
         int heartRate = generateRandomHeartRate();
-        callback.onHeartRateUpdate(heartRate);
+//        callback.onHeartRateUpdate(heartRate);
         Log.d("HeartRateManager", String.valueOf(heartRate));
 
-        if (isChecked && heartRate <= 60) {
+        if (settingSingleton.isSwitchOn() && heartRate <= 60) {
             callback.onDangerousHeartRate();
+            callback.onHeartRateUpdate(heartRate);
+        }else{
+            callback.onHeartRateUpdate(heartRate);
         }
     }
 

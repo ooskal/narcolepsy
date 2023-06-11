@@ -42,6 +42,9 @@ public class MessageSender {
                 smsManager.sendTextMessage(phoneNo, null, sms, null, null);
 
                 smsManager.sendTextMessage(phoneNo, null, location, null, null);
+
+                SettingSingleton settingSingleton = SettingSingleton.getInstance();
+                settingSingleton.setSwitchOn(false);
             } catch (Exception e) {
                 e.printStackTrace();
             }

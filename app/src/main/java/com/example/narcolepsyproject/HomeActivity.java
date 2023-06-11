@@ -72,12 +72,14 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
         database = RoomDB.getInstance(this);
 
         heartbeatText = findViewById(R.id.heartBeat);
+
+
 //        ContactData.getAllContactData(this);
         List<ContactData> contactDataList = new ArrayList<>();
         contactDataList = ContactData.getAllContactData(this);
 
         SettingDao settingDao = database.settingDao();
-        Integer dataList = settingDao.getRepeatCountData();
+        List<Integer> dataList = settingDao.getRepeatCountData();
         Boolean activate = settingDao.getActivateData();
 
         String logMessage = "Contact Data List: " + contactDataList.toString();
@@ -192,6 +194,7 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
     protected void onResume() {
         super.onResume();
         heartbeatText = findViewById(R.id.heartBeat);
+
     }
 
 
