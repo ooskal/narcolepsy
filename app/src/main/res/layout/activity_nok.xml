@@ -23,7 +23,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/bottom_menu" />
+        app:menu="@menu/bottom_menu"
+        app:itemIconTint="#808080"/>
 
     <EditText
         android:id="@+id/editNameText"

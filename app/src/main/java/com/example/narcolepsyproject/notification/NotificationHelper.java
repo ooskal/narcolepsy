@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.telephony.SmsManager;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -16,6 +17,7 @@ import com.example.narcolepsyproject.R;
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateManager;
 import com.example.narcolepsyproject.db.RoomDB;
 import com.example.narcolepsyproject.db.contact.ContactData;
+import com.example.narcolepsyproject.db.setting.SettingDao;
 
 import java.util.List;
 import java.util.Timer;
@@ -31,21 +33,36 @@ public class NotificationHelper {
     private static int fixedCount;
     private static boolean isClicked = false;
     private static int delayMillis = 6000; // 6초
+    private static Context context;
+    public static RoomDB database =  RoomDB.getInstance(context);
 
-
-
-    public static void setCount(Integer count){
-        fixedCount = count;
-        notificationCount  = fixedCount;
+    public NotificationHelper(Context context) {
+        this.context = context;
     }
 
 
 
 
+    //반복수 받아오기
+    public static void setCount(){
+        SettingSingleton settingSingleton = SettingSingleton.getInstance();
+        fixedCount = settingSingleton.getRepeat();
+        notificationCount = fixedCount;
+    }
+
+
+    //알림 취소
+    public static void cancelAlert(Context context){
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(NotificationHelper.NOTIFICATION_ID);
+        Log.d("cancelAlert", "문자 전송 후 알림취소");
+    }
+
+
 
 
     //알림 실행 때마다 카운트 감소
-    public static void changeNotificationCount(){
+    public static void changeNotificationCount(Context context){
 
         if(notificationCount!=1){
 
@@ -67,6 +84,7 @@ public class NotificationHelper {
 
                                 // 알림 끄기
                                 HeartRateManager.offAlert();
+                                cancelAlert(context);
 
                                 // 카운트 리셋
                                 notificationCount = fixedCount;
@@ -106,7 +124,7 @@ public class NotificationHelper {
         isClicked = false;
 
         //카운트 감소
-        changeNotificationCount();
+        changeNotificationCount(context);
 
         Intent buttonClickIntent = new Intent(context, ButtonClickReceiver.class);
         buttonClickIntent.setAction("com.example.BUTTON_CLICK_ACTION");

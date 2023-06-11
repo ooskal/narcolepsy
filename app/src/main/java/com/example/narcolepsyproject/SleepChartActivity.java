@@ -329,4 +329,5 @@ public class SleepChartActivity extends AppCompatActivity {
         }
         return days;
     }
+
 }

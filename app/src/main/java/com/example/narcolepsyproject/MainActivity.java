@@ -25,12 +25,17 @@ import com.example.narcolepsyproject.db.RoomDB;
 import com.example.narcolepsyproject.db.contact.ContactAdapter;
 import com.example.narcolepsyproject.db.contact.ContactData;
 import com.example.narcolepsyproject.notification.LocationHelper;
+import com.google.android.gms.fitness.data.DataType;
+import com.google.android.gms.fitness.request.DataReadRequest;
+import com.google.android.libraries.healthdata.HealthDataClient;
+import com.google.android.libraries.healthdata.HealthDataService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     static final int SMS_RECEIVE_PERMISSON=1;
     LocationHelper locationHelper;
+    HealthDataClient healthDataClient;
 
 
 //    Button btn;
@@ -58,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(new Intent(MainActivity.this, TestActivity.class));
 //            }
 //        });
-        
+
         setTitle("기면증 방지앱 (가제)");
 
         bottomNavigationView = findViewById(R.id.bottomNav);
@@ -119,14 +125,13 @@ public class MainActivity extends AppCompatActivity {
         locationHelper = new LocationHelper(MainActivity.this);
         locationHelper.requestLocationUpdates();
 
-
-
-
-
-
-
-
-
-
+        // 심박수 실제로 받아오는 코드 (갤럭시 워치와 삼성 핸드폰에 연결하지 않으면 오류 -> 에뮬레이터로 실행 불가)
+//        long startTime = System.currentTimeMillis() - TimeUnit.HOURS.toMillis(1);
+//        long endTime = System.currentTimeMillis();
+//
+//        healthDataClient = HealthDataService.getClient(MainActivity.this);
+//        DataReadRequest.Builder builder = new DataReadRequest.Builder()
+//                .read(DataType.TYPE_HEART_RATE_BPM)
+//                .setTimeRange(startTime, endTime, TimeUnit.MILLISECONDS);
     }
 }
