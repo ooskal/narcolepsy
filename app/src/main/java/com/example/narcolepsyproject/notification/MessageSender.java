@@ -18,13 +18,14 @@ public class MessageSender {
     private static Context context;
     private static List<ContactData> contactList = ContactData.getAllContactData(context);
     private static List<String> smsList = new ArrayList<>();
-    private static MessageCallback callback;
+
     private static List<String> formattedDataList = new ArrayList<>();
 
-    public MessageSender(Context context, MessageCallback callback) {
+    public MessageSender(Context context){
         this.context = context;
-        this.callback = callback;
-    }
+    };
+
+
 
     public static void sendMessage(){
 
@@ -41,6 +42,9 @@ public class MessageSender {
                 smsManager.sendTextMessage(phoneNo, null, sms, null, null);
 
                 smsManager.sendTextMessage(phoneNo, null, location, null, null);
+
+                SettingSingleton settingSingleton = SettingSingleton.getInstance();
+                settingSingleton.setSwitchOn(false);
             } catch (Exception e) {
                 e.printStackTrace();
             }

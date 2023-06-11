@@ -4,21 +4,32 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateCallback;
-
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateManager;
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateMonitor;
+
+import com.example.narcolepsyproject.db.RoomDB;
+
 import com.example.narcolepsyproject.db.contact.ContactData;
+import com.example.narcolepsyproject.db.setting.SettingDao;
 import com.example.narcolepsyproject.notification.NotificationHelper;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -43,6 +54,12 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
     HorizontalBarChart horizontalBarChart;
     TextView heartbeatText;
 
+    RoomDB database;
+    HeartRateManager heartRateManager;
+
+
+
+
 
 
 
@@ -54,13 +71,21 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
 
         setTitle("Home");
 
+        database = RoomDB.getInstance(this);
+
         heartbeatText = findViewById(R.id.heartBeat);
+
+
 //        ContactData.getAllContactData(this);
         List<ContactData> contactDataList = new ArrayList<>();
         contactDataList = ContactData.getAllContactData(this);
 
+        SettingDao settingDao = database.settingDao();
+        List<Integer> dataList = settingDao.getRepeatCountData();
+        Boolean activate = settingDao.getActivateData();
+
         String logMessage = "Contact Data List: " + contactDataList.toString();
-        System.out.println(logMessage);
+        System.out.println(logMessage + dataList.toString() + activate.toString());
 
 
 
@@ -84,6 +109,7 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
                         editor.putInt("selectedTab", 0);
                         editor.apply();
                         startActivity(new Intent(HomeActivity.this, SleepChartActivity.class));
+
                         return true;
                     case R.id.item_home:
                         editor.putInt("selectedTab", 1);
@@ -156,11 +182,22 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
             }
         });
 
-        HeartRateManager manager = new HeartRateManager(HomeActivity.this);
-        manager.startHeartRateMonitoring();
+        // HeartRateManager 싱글톤 객체 얻기
+        heartRateManager = HeartRateManager.getInstance(this);
+        // startHeartRateMonitoring() 함수가 처음 호출되었는지 확인 후 실행
+        if (!heartRateManager.isIsHeartRateMonitoringStarted()) {
+            heartRateManager.startHeartRateMonitoring(HomeActivity.this);
+            heartRateManager.setIsHeartRateMonitoringStarted(true);
+        }
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        heartbeatText = findViewById(R.id.heartBeat);
+
+    }
 
 
     @Override
@@ -178,4 +215,5 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
     public void onDangerousHeartRate() {
         NotificationHelper.showNotification(HomeActivity.this, "심박수 알림", "남은 횟수: ");
     }
+
 }

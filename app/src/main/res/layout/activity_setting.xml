@@ -202,6 +202,7 @@
         android:layout_alignParentBottom="true"
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/bottom_menu"
-        android:layout_gravity="bottom" />
+        android:layout_gravity="bottom"
+        app:itemIconTint="#808080"/>
 
 </RelativeLayout>
