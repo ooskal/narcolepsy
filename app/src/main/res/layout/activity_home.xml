@@ -77,7 +77,7 @@
                 android:id="@+id/weekReport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="지난 주에 비해 활동시간 중 수면빈도가 감소했습니다."
+                android:text="지난 주, 이번주 수면 빈도 비교"
                 android:textSize="4pt"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
@@ -121,44 +121,44 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/stressBox"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="66dp"
-        android:layout_marginTop="430dp"
-        android:background="@drawable/corner_radius"
-        android:orientation="vertical">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/stressBox"-->
+<!--        android:layout_width="280dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginStart="66dp"-->
+<!--        android:layout_marginTop="430dp"-->
+<!--        android:background="@drawable/corner_radius"-->
+<!--        android:orientation="vertical">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="스트레스"
-            android:layout_margin="10dp"
-            android:textStyle="bold"
-            android:textSize="7pt"
-            android:textColor="@color/black"/>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="스트레스"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="7pt"-->
+<!--            android:textColor="@color/black"/>-->
 
-        <TextView
-            android:id="@+id/stress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="여기에 스트레스 수치"
-            android:layout_margin="15dp"
-            android:textSize="7pt"
-            android:textColor="@color/black"/>
+<!--        <TextView-->
+<!--            android:id="@+id/stress"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="여기에 스트레스 수치"-->
+<!--            android:layout_margin="15dp"-->
+<!--            android:textSize="7pt"-->
+<!--            android:textColor="@color/black"/>-->
 
-<!--        <com.github.mikephil.charting.charts.HorizontalBarChart-->
-<!--            android:layout_width="250dp"-->
-<!--            android:layout_marginLeft="15dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:background="@color/white"-->
-<!--            android:id="@+id/stressBar"/>-->
+<!--&lt;!&ndash;        <com.github.mikephil.charting.charts.HorizontalBarChart&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="250dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_marginLeft="15dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="50dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@color/white"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/stressBar"/>&ndash;&gt;-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
