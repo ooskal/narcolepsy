@@ -25,10 +25,10 @@ import com.example.narcolepsyproject.db.RoomDB;
 import com.example.narcolepsyproject.db.contact.ContactAdapter;
 import com.example.narcolepsyproject.db.contact.ContactData;
 import com.example.narcolepsyproject.notification.LocationHelper;
-import com.google.android.gms.fitness.data.DataType;
-import com.google.android.gms.fitness.request.DataReadRequest;
-import com.google.android.libraries.healthdata.HealthDataClient;
-import com.google.android.libraries.healthdata.HealthDataService;
+//import com.google.android.gms.fitness.data.DataType;
+//import com.google.android.gms.fitness.request.DataReadRequest;
+//import com.google.android.libraries.healthdata.HealthDataClient;
+//import com.google.android.libraries.healthdata.HealthDataService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     static final int SMS_RECEIVE_PERMISSON=1;
     LocationHelper locationHelper;
-    HealthDataClient healthDataClient;
+//    HealthDataClient healthDataClient;
 
 
 //    Button btn;
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        setTitle("기면증 방지앱 (가제)");
+        setTitle("NARCOLEPSY");
 
         bottomNavigationView = findViewById(R.id.bottomNav);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);

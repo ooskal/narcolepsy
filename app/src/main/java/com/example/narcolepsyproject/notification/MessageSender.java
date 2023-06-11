@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class MessageSender {
 
     private static Context context;
-    private static List<ContactData> contactList = ContactData.getAllContactData(context);
+    private static List<ContactData> contactList;
     private static List<String> smsList = new ArrayList<>();
 
     private static List<String> formattedDataList = new ArrayList<>();
@@ -28,6 +28,8 @@ public class MessageSender {
 
 
     public static void sendMessage(){
+
+        contactList = ContactData.getAllContactData(context);
 
         String sms = "[기면증 안내 문자] 현재 사용자가 알림에 반복적으로 응답이 없습니다. 신속히 사용자의 상태를 확인하고 조치 바랍니다.";
         String location = LocationHelper.getLocationText();
@@ -43,13 +45,15 @@ public class MessageSender {
 
                 smsManager.sendTextMessage(phoneNo, null, location, null, null);
 
-                SettingSingleton settingSingleton = SettingSingleton.getInstance();
-                settingSingleton.setSwitchOn(false);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
         }
+
+        SettingSingleton settingSingleton = SettingSingleton.getInstance();
+        settingSingleton.setSwitchOn(false);
         formatData(location);
 
     }
@@ -60,8 +64,8 @@ public class MessageSender {
 
         StringJoiner joiner = new StringJoiner(",");
         for (ContactData contactData : contactList) {
-            String phoneNumber = contactData.getPhoneNumber(); // ContactData에서 phoneNumber 추출
-            joiner.add(phoneNumber); // 번호를 StringJoiner에 추가
+            String name = contactData.getName(); // ContactData에서 phoneNumber 추출
+            joiner.add(name); // 번호를 StringJoiner에 추가
         }
         String contactStr = joiner.toString();
 

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 //import com.example.narcolepsyproject.db.contact.ContactAdapter;
 //import com.example.narcolepsyproject.db.contact.ContactData;
@@ -31,6 +32,7 @@ public class NokActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     Button btnAdd;
     EditText editNameText,editPhoneNumberText;
+    TextView textView;
 
     //데이터베이스
     List<ContactData> dataList = new ArrayList<>();
@@ -53,6 +55,7 @@ public class NokActivity extends AppCompatActivity {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = sharedPreferences.edit();
+        textView = findViewById(R.id.textView);
 
         int selectedTab = sharedPreferences.getInt("selectedTab", 0);
         bottomNavigationView.setSelectedItemId(bottomNavigationView.getMenu().getItem(selectedTab).getItemId());
@@ -85,7 +88,7 @@ public class NokActivity extends AppCompatActivity {
         });
 
 
-        setTitle("보호자 관리");
+        setTitle("보호자관리");
 
         btnAdd = findViewById(R.id.btn_add); // 연락처 추가 버튼
         editNameText = findViewById(R.id.editNameText);

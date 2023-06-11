@@ -63,7 +63,7 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        setTitle("알림 설정");
+        setTitle("알림설정");
 
         startTime = findViewById(R.id.startTime);
         endTime = findViewById(R.id.endTime);

@@ -26,41 +26,56 @@
         app:menu="@menu/bottom_menu"
         app:itemIconTint="#808080"/>
 
+
     <EditText
         android:id="@+id/editNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="40dp"
         android:hint="이름 입력"
-        android:padding="12dp"
-        />
+        android:padding="12dp" />
 
     <EditText
         android:id="@+id/editPhoneNumberText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="번호 입력"
+        android:layout_alignParentStart="true"
+
+        android:layout_marginStart="141dp"
         android:layout_marginTop="40dp"
-        android:padding="12dp"
-        />
+        android:hint="번호 입력"
+        android:padding="12dp" />
 
     <Button
         android:id="@+id/btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="280dp"
+        android:layout_marginTop="42dp"
         android:layout_weight="1"
-        android:text="연락처 추가"
-        android:layout_marginLeft="280dp"/>
-
-
+        android:text="연락처 추가" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="120dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
         tools:listitem="@layout/list_row_nok"/>
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="16dp"
+        android:text="비상 시 저장된 모든 연락처로 메세지가 전송됩니다." />
 
 
 </RelativeLayout>

@@ -60,7 +60,7 @@ public class SleepChartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sleep_chart);
 
-        setTitle("수면 기록");
+        setTitle("수면기록");
 
         bottomNavigationView = findViewById(R.id.bottomNav);
 
@@ -138,7 +138,7 @@ public class SleepChartActivity extends AppCompatActivity {
             upOrDown = "감소";
             percent = (twoDayAgoCheck - yesterdayCheck) * 100 / yesterdayCheck;
         }
-        String reportMessage = "이틀 전과 비교해서 전일 수면 시간이 약 " + percent + "%만큼 " + upOrDown + "했습니다.";
+        String reportMessage = "이틀 전과 비교해서 전일 수면 시간이\n약 " + percent + "%만큼 " + upOrDown + "했습니다.";
         if (yesterdayCheck != twoDayAgoCheck) {
             timeText.setText(reportMessage);
         } else {
@@ -244,7 +244,7 @@ public class SleepChartActivity extends AppCompatActivity {
         }
 
         BarDataSet dataSet = new BarDataSet(entries, "Sleep Data");
-        dataSet.setColor(Color.rgb(255, 160, 72));
+        dataSet.setColor(Color.rgb(110, 239, 187));
 
         ArrayList<String> labels = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
@@ -296,7 +296,7 @@ public class SleepChartActivity extends AppCompatActivity {
 
 
         BarDataSet dataSet = new BarDataSet(entries, "Sleep Month Data");
-        dataSet.setColor(Color.rgb(255, 160, 72));
+        dataSet.setColor(Color.rgb(116, 188, 155));
         BarData data = new BarData(dataSet);
         sleepChart.setData(data);
 

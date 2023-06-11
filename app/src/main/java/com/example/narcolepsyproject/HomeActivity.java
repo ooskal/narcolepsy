@@ -19,8 +19,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +59,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.bumptech.glide.Glide;
+
 public class HomeActivity extends AppCompatActivity implements HeartRateCallback {
 
 
@@ -69,6 +73,7 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
     TextView weekReport;
     float lastWeekData;
     float thisWeekData;
+    ImageView heartImage;
 
 
     RoomDB database;
@@ -87,11 +92,16 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        setTitle("Home");
+        setTitle("건강");
 
         database = RoomDB.getInstance(this);
 
         heartbeatText = findViewById(R.id.heartBeat);
+
+        ImageView lala_gif_img = (ImageView)findViewById(R.id.heart_gif_img);
+        Glide.with(this).load(R.raw.heart).into(lala_gif_img);
+
+        heartImage = findViewById(R.id.imageView2);
 
 
 //        ContactData.getAllContactData(this);
@@ -208,6 +218,7 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
         yAxisRight.setDrawGridLines(false);
         xAxis.setDrawGridLines(false);
         yAxis.setDrawGridLines(false);
+        thisWeekDataSet.setColor(Color.rgb(148, 240, 244));
         lastWeekDataSet.setColors(Color.LTGRAY);
         horizontalBarChart.getLegend().setEnabled(false);
         horizontalBarChart.getDescription().setEnabled(false);
@@ -216,15 +227,7 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
         thisWeekDataSet.setDrawValues(false);
 
 
-        HeartRateManager manager = new HeartRateManager(HomeActivity.this);
-        manager.startHeartRateMonitoring();
 
-        stressLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, StressActivity.class));
-            }
-        });
 
         // HeartRateManager 싱글톤 객체 얻기
         heartRateManager = HeartRateManager.getInstance(this);
@@ -234,13 +237,6 @@ public class HomeActivity extends AppCompatActivity implements HeartRateCallback
             heartRateManager.setIsHeartRateMonitoringStarted(true);
         }
 
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        heartbeatText = findViewById(R.id.heartBeat);
 
     }
 

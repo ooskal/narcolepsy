@@ -32,7 +32,7 @@ public class MessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
-        setTitle("문자 내역");
+        setTitle("문자내역");
 
         bottomNavigationView = findViewById(R.id.bottomNav);
 

@@ -20,6 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginTop="40dp"
             android:layout_centerHorizontal="true">
             <TextView
                 android:layout_width="wrap_content"
@@ -104,11 +105,12 @@
 
 <!--        반복 텍스트포함-->
         <LinearLayout
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="30dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -151,39 +153,45 @@
 <!--        반복 텍스트포함 끝-->
 
 
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="94dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="알림 활성화"
-                android:textSize="25dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="25dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="1dp"
+                android:layout_marginBottom="41dp"
                 android:text="메시지가 전송된 후에는 자동으로 꺼집니다."
-                android:layout_marginTop="2dp"
-                android:textSize="12dp"/>
+                android:textSize="12dp" />
 
             <Switch
                 android:id="@+id/notification_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="30dp"
-                android:layout_marginBottom="293dp"
-                android:text="꺼짐" />
+
+                android:layout_marginStart="248dp"
+                android:layout_marginBottom="41dp"
+                android:text="꺼짐"
+                android:textSize="18dp" />
 
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
 
