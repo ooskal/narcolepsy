@@ -45,10 +45,9 @@ public class NotificationHelper {
 
     //반복수 받아오기
     public static void setCount(){
-        SettingDao settingDao = database.settingDao();
-        Integer repeatNum = settingDao.getRepeatCountData();
-        fixedCount = repeatNum;
-        notificationCount  = fixedCount;
+        SettingSingleton settingSingleton = SettingSingleton.getInstance();
+        fixedCount = settingSingleton.getRepeat();
+        notificationCount = fixedCount;
     }
 
 
