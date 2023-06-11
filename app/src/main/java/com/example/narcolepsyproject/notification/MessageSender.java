@@ -21,6 +21,10 @@ public class MessageSender {
 
     private static List<String> formattedDataList = new ArrayList<>();
 
+    public MessageSender(Context context){
+        this.context = context;
+    };
+
 
 
     public static void sendMessage(){

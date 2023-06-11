@@ -87,4 +87,5 @@ public class MyPageActivity extends AppCompatActivity {
             }
         });
     }
+
 }

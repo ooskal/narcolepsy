@@ -136,4 +136,6 @@ public class NokActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

@@ -168,6 +168,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         app:labelVisibilityMode="unlabeled"
+        app:itemIconTint="#808080"
         app:menu="@menu/bottom_menu" />
 
 </RelativeLayout>

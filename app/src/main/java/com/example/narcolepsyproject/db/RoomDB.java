@@ -15,7 +15,7 @@ import com.example.narcolepsyproject.db.setting.SettingDao;
 import com.example.narcolepsyproject.db.setting.SettingData;
 
 @TypeConverters(Converters.class)
-@Database(entities = {ContactData.class, SleepChartData.class, SettingData.class}, version = 1, exportSchema = false)
+@Database(entities = {ContactData.class, SleepChartData.class, SettingData.class}, version = 2, exportSchema = false)
 public abstract class RoomDB extends RoomDatabase
 {
     private static RoomDB database;

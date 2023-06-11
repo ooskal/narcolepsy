@@ -82,6 +82,8 @@
 
     </LinearLayout>
 
+
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
@@ -90,7 +92,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/bottom_menu" />
+        app:menu="@menu/bottom_menu"
+        app:itemIconTint="#808080"/>
 
 
 </RelativeLayout>
