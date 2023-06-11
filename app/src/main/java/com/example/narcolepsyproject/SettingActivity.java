@@ -1,5 +1,7 @@
 package com.example.narcolepsyproject;
 
+import static com.example.narcolepsyproject.notification.SettingSingleton.getInstance;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,19 +22,16 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.example.narcolepsyproject.biosignals.heartrate.HeartRateCallback;
+
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateManager;
 import com.example.narcolepsyproject.db.RoomDB;
-import com.example.narcolepsyproject.db.contact.ContactData;
-import com.example.narcolepsyproject.db.setting.SettingDao;
 import com.example.narcolepsyproject.db.setting.SettingData;
 import com.example.narcolepsyproject.notification.NotificationHelper;
+import com.example.narcolepsyproject.notification.SettingSingleton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 public class SettingActivity extends AppCompatActivity {
@@ -48,6 +47,8 @@ public class SettingActivity extends AppCompatActivity {
     private Integer repeatNum;
     RoomDB database;
     SettingData dataList;
+    HeartRateManager heartRateManager;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -57,7 +58,6 @@ public class SettingActivity extends AppCompatActivity {
 
         setTitle("알림 설정");
 
-        bottomNavigationView = findViewById(R.id.bottomNav);
         startTime = findViewById(R.id.startTime);
         endTime = findViewById(R.id.endTime);
         calendar = Calendar.getInstance();
@@ -90,7 +90,7 @@ public class SettingActivity extends AppCompatActivity {
                                 String newText = input.getText().toString();
                                 int intText = Integer.parseInt(newText);
                                 repeat.setText(newText);
-                                NotificationHelper.setCount(intText);
+
 
                                 // Room DB에 값을 저장
                                 SettingData settingData = new SettingData();
@@ -113,6 +113,8 @@ public class SettingActivity extends AppCompatActivity {
         });
 
 
+
+
         //알림 활성화
         notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -122,6 +124,9 @@ public class SettingActivity extends AppCompatActivity {
                     notificationSwitch.setText("켜짐");
                     // 스위치가 활성화된 상태
                     HeartRateManager.onAlert();
+                    NotificationHelper.setCount();
+                    SettingSingleton isSwitchOnSingleton = getInstance();
+                    isSwitchOnSingleton.setSwitchOn(true);
 
                     // Room DB에 값을 저장
                     SettingData settingData = new SettingData();
@@ -135,6 +140,9 @@ public class SettingActivity extends AppCompatActivity {
                     // 스위치가 비활성화된 상태
                     HeartRateManager.offAlert();
 
+                    SettingSingleton isSwitchOnSingleton = getInstance();
+                    isSwitchOnSingleton.setSwitchOn(false);
+
                     // Room DB에 값을 저장
                     SettingData settingData = new SettingData();
                     settingData.setActivate(false);
@@ -145,20 +153,24 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+
+
         startTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(startTime);
+                showTimePickerDialog(startTime, true);
             }
         });
 
         endTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(endTime);
+                showTimePickerDialog(endTime, false);
             }
         });
 
+
+        bottomNavigationView = findViewById(R.id.bottomNav);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = sharedPreferences.edit();
 
@@ -193,7 +205,7 @@ public class SettingActivity extends AppCompatActivity {
 
 
     }
-    private void showTimePickerDialog(TextView textView) {
+    private void showTimePickerDialog(TextView textView, boolean isStartTime) {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
@@ -206,6 +218,13 @@ public class SettingActivity extends AppCompatActivity {
                         calendar.set(Calendar.MINUTE, minute);
                         String selectedTime = timeFormat.format(calendar.getTime());
                         textView.setText(selectedTime);
+                        if (isStartTime) {
+                            SettingSingleton settingSingleton = SettingSingleton.getInstance();
+                            settingSingleton.setStartTime(selectedTime);
+                        } else {
+                            SettingSingleton settingSingleton = SettingSingleton.getInstance();
+                            settingSingleton.setEndTime(selectedTime);
+                        }
                     }
                 },
                 hour,
@@ -216,6 +235,16 @@ public class SettingActivity extends AppCompatActivity {
         timePickerDialog.show();
     }
 
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SettingSingleton settingSingleton = getInstance();
+        if (settingSingleton.isSwitchOn()) {
+            notificationSwitch.setChecked(true);
+        } else {
+            notificationSwitch.setChecked(false);
+        }
+        startTime.setText(settingSingleton.getStartTime());
+        endTime.setText(settingSingleton.getEndTime());
+    }
 }
