@@ -15,7 +15,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -25,7 +24,10 @@ import android.widget.Toast;
 
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateCallback;
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateManager;
+import com.example.narcolepsyproject.biosignals.heartrate.HeartRateMonitor;
+
 import com.example.narcolepsyproject.db.RoomDB;
+
 import com.example.narcolepsyproject.db.contact.ContactData;
 import com.example.narcolepsyproject.db.setting.SettingDao;
 import com.example.narcolepsyproject.notification.NotificationHelper;

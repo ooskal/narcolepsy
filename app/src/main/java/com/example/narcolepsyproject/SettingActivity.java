@@ -24,8 +24,13 @@ import android.widget.TimePicker;
 
 
 import com.example.narcolepsyproject.biosignals.heartrate.HeartRateManager;
+import com.example.narcolepsyproject.biosignals.heartrate.HeartRateMonitor;
+
+
+import com.example.narcolepsyproject.biosignals.heartrate.HeartRateManager;
 import com.example.narcolepsyproject.db.RoomDB;
 import com.example.narcolepsyproject.db.setting.SettingData;
+
 import com.example.narcolepsyproject.notification.NotificationHelper;
 import com.example.narcolepsyproject.notification.SettingSingleton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
